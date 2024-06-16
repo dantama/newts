@@ -1,0 +1,16 @@
+{
+    "/js/scripts.js": "/js/scripts.js",
+    "/js/manifest.js": "/js/manifest.js",
+    "/css/styles.css": "/css/styles.css",
+    "/js/vendor.js": "/js/vendor.js",
+    "/vendor/@mdi/fonts/materialdesignicons-webfont.eot": "/vendor/@mdi/fonts/materialdesignicons-webfont.eot",
+    "/vendor/@mdi/fonts/materialdesignicons-webfont.ttf": "/vendor/@mdi/fonts/materialdesignicons-webfont.ttf",
+    "/vendor/@mdi/fonts/materialdesignicons-webfont.woff": "/vendor/@mdi/fonts/materialdesignicons-webfont.woff",
+    "/vendor/@mdi/fonts/materialdesignicons-webfont.woff2": "/vendor/@mdi/fonts/materialdesignicons-webfont.woff2",
+    "/vendor/@mdi/css/materialdesignicons.css": "/vendor/@mdi/css/materialdesignicons.css",
+    "/vendor/@mdi/css/materialdesignicons.css.map": "/vendor/@mdi/css/materialdesignicons.css.map",
+    "/vendor/@mdi/css/materialdesignicons.min.css": "/vendor/@mdi/css/materialdesignicons.min.css",
+    "/vendor/@mdi/css/materialdesignicons.min.css.map": "/vendor/@mdi/css/materialdesignicons.min.css.map",
+    "/vendor/tom-select/css/tom-select.bootstrap5.min.css": "/vendor/tom-select/css/tom-select.bootstrap5.min.css",
+    "/vendor/tom-select/css/tom-select.bootstrap5.min.css.map": "/vendor/tom-select/css/tom-select.bootstrap5.min.css.map"
+}
