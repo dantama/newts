@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Models;
 
-use App\Models\Position;
+use Modules\Core\Models\Position;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;

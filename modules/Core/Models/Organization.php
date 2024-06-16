@@ -2,10 +2,13 @@
 
 namespace Modules\Core\Models;
 
+use App\Models\Traits\Restorable\Restorable;
+use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
+    use Restorable, Searchable;
 
     protected $table = "organizations";
 

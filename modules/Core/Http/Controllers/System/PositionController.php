@@ -2,18 +2,18 @@
 
 namespace Modules\Core\Http\Controllers\System;
 
-use App\Models\Departement;
-use App\Models\Position;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Modules\Admin\Http\Requests\System\Position\StoreRequest;
-use Modules\Admin\Http\Requests\System\Position\UpdateRequest;
-use Modules\Admin\Http\Controllers\Controller;
-use Modules\Admin\Repositories\CompanyPositionRepository;
+use Modules\core\Http\Requests\System\Position\StoreRequest;
+use Modules\core\Http\Requests\System\Position\UpdateRequest;
+use Modules\Core\Http\Controllers\Controller;
+use Modules\Core\Models\Departement;
+use Modules\Core\Models\Position;
+use Modules\Core\Repositories\OrganizationPositionRepository;
 
 class PositionController extends Controller
 {
-    use CompanyPositionRepository;
+    use OrganizationPositionRepository;
 
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class PositionController extends Controller
 
         $positions_count = Position::count();
 
-        return view('admin::system.positions.index', compact('departments', 'positions', 'positions_count'));
+        return view('core::system.positions.index', compact('departments', 'positions', 'positions_count'));
     }
 
     /**
@@ -46,7 +46,7 @@ class PositionController extends Controller
         $departments = Departement::all();
         $positions = Position::with('departement')->get()->groupBy('department.name');
 
-        return view('admin::system.positions.create', compact('roles', 'positions', 'departments'));
+        return view('core::system.positions.create', compact('roles', 'positions', 'departments'));
     }
 
     /**
@@ -72,7 +72,7 @@ class PositionController extends Controller
         $departments = Departement::all();
         $positions = Position::with('departement')->get()->groupBy('departement.name');
 
-        return view('admin::system.positions.show', compact('position', 'roles', 'departments', 'positions'));
+        return view('core::system.positions.show', compact('position', 'roles', 'departments', 'positions'));
     }
 
     /**

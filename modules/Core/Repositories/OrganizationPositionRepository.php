@@ -3,7 +3,7 @@
 namespace Modules\Core\Repositories;
 
 use Illuminate\Support\Arr;
-use App\Models\Position;
+use Modules\Core\Models\Position;
 use Modules\Account\Models\User;
 
 trait OrganizationPositionRepository

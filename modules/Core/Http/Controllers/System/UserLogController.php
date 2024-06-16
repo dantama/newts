@@ -6,8 +6,8 @@ use Hash;
 use Illuminate\Http\Request;
 use Modules\Account\Models\User;
 use Modules\Account\Models\UserLog;
-use Modules\Admin\Http\Requests\System\User\StoreRequest;
-use Modules\Admin\Http\Controllers\Controller;
+use Modules\Core\Http\Requests\System\User\StoreRequest;
+use Modules\Core\Http\Controllers\Controller;
 
 class UserLogController extends Controller
 {
@@ -26,7 +26,7 @@ class UserLogController extends Controller
             ->whenUserId($request->get('user'))
             ->paginate($request->get('limit', 10));
 
-        return view('admin::system.user-logs.index', compact('logs', 'user'));
+        return view('core::system.user-logs.index', compact('logs', 'user'));
     }
 
     /**

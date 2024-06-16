@@ -1,11 +1,11 @@
-@extends('admin::layouts.default')
+@extends('core::layouts.default')
 
 @section('title', 'Pengguna')
 @section('navtitle', 'Pengguna')
 
 @section('content')
     <div class="d-flex align-items-center mb-4">
-        <a class="text-decoration-none" href="{{ request('next', route('admin::system.users.index')) }}"><i class="mdi mdi-arrow-left-circle-outline mdi-36px"></i></a>
+        <a class="text-decoration-none" href="{{ request('next', route('core::system.users.index')) }}"><i class="mdi mdi-arrow-left-circle-outline mdi-36px"></i></a>
         <div class="ms-4">
             <h2 class="mb-1">Lihat detail pengguna</h2>
             <div class="text-secondary">Menampilkan informasi pengguna, detail kontak, alamat, dan peran.</div>
@@ -28,7 +28,7 @@
                     </h4>
                 </div>
                 <div class="list-group list-group-flush border-top">
-                    <form class="d-inline form-block form-confirm" action="{{ route('admin::system.users.repass', ['user' => $user->id]) }}" method="POST" id="reset-password"> @csrf @method('PUT')
+                    <form class="d-inline form-block form-confirm" action="{{ route('core::system.users.repass', ['user' => $user->id]) }}" method="POST" id="reset-password"> @csrf @method('PUT')
                         <a class="list-group-item list-group-item-action text-danger border-0" href="javascript:;" onclick="event.preventDefault(); $('#reset-password').submit();"><i class="mdi mdi-lock-open"></i> Atur ulang sandi</a>
                     </form>
                 </div>
@@ -39,7 +39,7 @@
                     <p class="text-muted mb-2">Tentukan hak akses ke pengguna</p>
                 </div>
                 <div class="card-body">
-                    <form class="form-block" action="{{ route('admin::system.users.roles', ['user' => $user->id]) }}" method="post"> @csrf @method('PUT')
+                    <form class="form-block" action="{{ route('core::system.users.roles', ['user' => $user->id]) }}" method="post"> @csrf @method('PUT')
                         <div class="mb-3">
                             @foreach ($roles as $role)
                                 <div class="form-check">
@@ -82,7 +82,7 @@
                     <i class="mdi mdi-pencil"></i> Ubah profil
                 </div>
                 <div class="card-body border-0">
-                    <form class="form-block" action="{{ route('admin::system.users.update.profile', ['user' => $user->id]) }}" method="POST"> @csrf @method('PUT')
+                    <form class="form-block" action="{{ route('core::system.users.update.profile', ['user' => $user->id]) }}" method="POST"> @csrf @method('PUT')
                         <div class="row mb-3">
                             <label class="col-lg-4 col-xl-3 col-form-label required">Nama lengkap</label>
                             <div class="col-lg-7 col-xl-8">

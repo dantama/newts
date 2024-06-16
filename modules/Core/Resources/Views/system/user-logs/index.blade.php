@@ -1,4 +1,4 @@
-@extends('admin::layouts.default')
+@extends('core::layouts.default')
 
 @section('title', 'Log')
 @section('navtitle', 'Log')
@@ -10,7 +10,7 @@
                 <i class="mdi mdi-format-list-bulleted"></i> Daftar log pengguna
             </div>
             <div class="card-body border-top border-light">
-                <form class="form-block row gy-2 gx-2" action="{{ route('admin::system.user-logs.index') }}" method="get">
+                <form class="form-block row gy-2 gx-2" action="{{ route('core::system.user-logs.index') }}" method="get">
                     <input name="trash" type="hidden" value="{{ request('trash') }}">
                     <div class="flex-grow-1 col-auto">
                         <select class="form-select" name="user" style="padding-top: 0 !important;">
@@ -23,7 +23,7 @@
                         <input class="form-control" name="search" placeholder="Cari pesan log ..." value="{{ request('search') }}" />
                     </div>
                     <div class="col-auto">
-                        <a class="btn btn-light" href="{{ route('admin::system.user-logs.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
+                        <a class="btn btn-light" href="{{ route('core::system.user-logs.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-dark"><i class="mdi mdi-magnify"></i> Cari</button>
@@ -54,7 +54,7 @@
                                 <td nowrap>{{ $log->created_at }}</td>
                                 <td class="py-2 text-end" nowrap>
                                     @can('destroy', $log)
-                                        <form class="form-block form-confirm d-inline" action="{{ route('admin::system.user-logs.destroy', ['log' => $log->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
+                                        <form class="form-block form-confirm d-inline" action="{{ route('core::system.user-logs.destroy', ['log' => $log->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
                                             <button class="btn btn-soft-danger rounded px-2 py-1" data-bs-toggle="tooltip" title="Hapus"><i class="mdi mdi-trash-can-outline"></i></button>
                                         </form>
                                     @endcan

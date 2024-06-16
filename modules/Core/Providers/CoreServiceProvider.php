@@ -39,6 +39,9 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->app->register(AuthServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
         $this->loadDynamicRelationships();
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/Views', $this->moduleNameLower);

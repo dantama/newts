@@ -1,4 +1,4 @@
-@extends('admin::layouts.default')
+@extends('core::layouts.default')
 
 @section('title', 'Pengguna')
 @section('navtitle', 'Pengguna')
@@ -12,13 +12,13 @@
                         <i class="mdi mdi-format-list-bulleted"></i> Daftar pengguna
                     </div>
                     <div class="card-body border-top border-light">
-                        <form class="form-block row gy-2 gx-2" action="{{ route('admin::system.users.index') }}" method="get">
+                        <form class="form-block row gy-2 gx-2" action="{{ route('core::system.users.index') }}" method="get">
                             <input name="trash" type="hidden" value="{{ request('trash') }}">
                             <div class="flex-grow-1 col-auto">
                                 <input class="form-control" name="search" placeholder="Cari nama, username, atau email ..." value="{{ request('search') }}" />
                             </div>
                             <div class="col-auto">
-                                <a class="btn btn-light" href="{{ route('admin::system.users.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
+                                <a class="btn btn-light" href="{{ route('core::system.users.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-dark"><i class="mdi mdi-magnify"></i> Cari</button>
@@ -48,7 +48,7 @@
                                             @if ($user->trashed() || !Auth::user()->can('show', $user))
                                                 <span class="text-muted">{{ $user->name }}</span>
                                             @else
-                                                <a class="text-dark" href="{{ route('admin::system.users.show', ['user' => $user->id, 'page' => 'profile', 'next' => url()->current()]) }}">{{ $user->name }}</a>
+                                                <a class="text-dark" href="{{ route('core::system.users.show', ['user' => $user->id, 'page' => 'profile', 'next' => url()->current()]) }}">{{ $user->name }}</a>
                                             @endif
                                         </td>
                                         <td><a href="{{ $user->email_address }}" target="_blank">{{ $user->email_address }}</a></td>
@@ -62,19 +62,19 @@
                                             @if ($user->isnot(Auth::user()))
                                                 @if ($user->trashed())
                                                     @can('restore', $user)
-                                                        <form class="form-block form-confirm d-inline" action="{{ route('admin::system.users.restore', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
+                                                        <form class="form-block form-confirm d-inline" action="{{ route('core::system.users.restore', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
                                                             <button class="btn btn-soft-info rounded px-2 py-1" data-bs-toggle="tooltip" title="Pulihkan"><i class="mdi mdi-refresh"></i></button>
                                                         </form>
-                                                        <form class="form-block form-confirm d-inline" action="{{ route('admin::system.users.kill', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
+                                                        <form class="form-block form-confirm d-inline" action="{{ route('core::system.users.kill', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
                                                             <button class="btn btn-soft-danger rounded px-2 py-1" data-bs-toggle="tooltip" title="Hapus permanen"><i class="mdi mdi-trash-can-outline"></i></button>
                                                         </form>
                                                     @endcan
                                                 @else
                                                     @can('show', $user)
-                                                        <a class="btn btn-soft-primary rounded px-2 py-1" href="{{ route('admin::system.users.show', ['user' => $user->id, 'page' => 'profile', 'next' => url()->current()]) }}" method="post" data-bs-toggle="tooltip" title="Lihat detail"><i class="mdi mdi-eye-outline"></i></a>
+                                                        <a class="btn btn-soft-primary rounded px-2 py-1" href="{{ route('core::system.users.show', ['user' => $user->id, 'page' => 'profile', 'next' => url()->current()]) }}" method="post" data-bs-toggle="tooltip" title="Lihat detail"><i class="mdi mdi-eye-outline"></i></a>
                                                     @endcan
                                                     @can('destroy', $user)
-                                                        <form class="form-block form-confirm d-inline" action="{{ route('admin::system.users.destroy', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
+                                                        <form class="form-block form-confirm d-inline" action="{{ route('core::system.users.destroy', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
                                                             <button class="btn btn-soft-danger rounded px-2 py-1" data-bs-toggle="tooltip" title="Hapus"><i class="mdi mdi-trash-can-outline"></i></button>
                                                         </form>
                                                     @endcan
@@ -87,7 +87,7 @@
                                                                 @endcan
                                                                 @can('update', $user)
                                                                     <li>
-                                                                        <form class="dropdown-item form-block form-confirm" action="{{ route('admin::system.users.repass', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
+                                                                        <form class="dropdown-item form-block form-confirm" action="{{ route('core::system.users.repass', ['user' => $user->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
                                                                             <button class="btn btn-link text-dark p-0"><i class="mdi mdi-lock-open-outline"></i> Setel ulang sandi</button>
                                                                         </form>
                                                                     </li>
@@ -134,7 +134,7 @@
                 <div class="card border-0">
                     <div class="card-body"><i class="mdi mdi-account-plus-outline"></i> Tambah pengguna baru</div>
                     <div class="card-body border-top">
-                        <form class="form-block" action="{{ route('admin::system.users.store', ['next' => url()->full()]) }}" method="post"> @csrf
+                        <form class="form-block" action="{{ route('core::system.users.store', ['next' => url()->full()]) }}" method="post"> @csrf
                             <div class="mb-3">
                                 <label class="form-label" for="name">Nama lengkap</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
@@ -159,7 +159,7 @@
             <div class="card border-0">
                 <div class="card-body">Menu lainnya</div>
                 <div class="list-group list-group-flush border-top border-light">
-                    <a class="list-group-item list-group-item-action text-danger" href="{{ route('admin::system.users.index', ['trash' => !request('trash')]) }}"><i class="mdi mdi-trash-can-outline"></i> Lihat pengguna yang {{ request('trash') ? 'tidak' : '' }} dihapus</a>
+                    <a class="list-group-item list-group-item-action text-danger" href="{{ route('core::system.users.index', ['trash' => !request('trash')]) }}"><i class="mdi mdi-trash-can-outline"></i> Lihat pengguna yang {{ request('trash') ? 'tidak' : '' }} dihapus</a>
                 </div>
             </div>
         </div>
@@ -190,7 +190,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('modal-cross-login').addEventListener('show.bs.modal', (e) => {
                 let user = JSON.parse(e.relatedTarget.dataset.user);
-                document.getElementById('modal-cross-login-form').setAttribute('action', `{{ route('admin::system.users.index') }}/${user.id}/login`);
+                document.getElementById('modal-cross-login-form').setAttribute('action', `{{ route('core::system.users.index') }}/${user.id}/login`);
                 document.getElementById('modal-cross-login-name').innerHTML = user.name;
             });
         });

@@ -14,7 +14,7 @@ class AccountDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(20)->create();
+        User::factory()->count(100)->create();
 
         $users = User::all();
 
@@ -25,6 +25,6 @@ class AccountDatabaseSeeder extends Seeder
         }
 
         $user = $users->first();
-        $user->update(['username' => 'empower']);
+        $user->update(['username' => 'root']);
     }
 }

@@ -1,4 +1,4 @@
-@extends('admin::layouts.default')
+@extends('core::layouts.default')
 
 @section('title', 'Departemen ')
 @section('navtitle', 'Departemen')
@@ -11,13 +11,13 @@
                     <i class="mdi mdi-format-list-bulleted"></i> Daftar departemen
                 </div>
                 <div class="card-body border-top border-light">
-                    <form class="form-block row g-2" action="{{ route('admin::system.departments.index') }}" method="get">
+                    <form class="form-block row g-2" action="{{ route('core::system.departments.index') }}" method="get">
                         <input name="trash" type="hidden" value="{{ request('trash') }}">
                         <div class="flex-grow-1 col-auto">
                             <input class="form-control" name="search" placeholder="Cari nama ..." value="{{ request('search') }}" />
                         </div>
                         <div class="col-auto">
-                            <a class="btn btn-light" href="{{ route('admin::system.departments.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
+                            <a class="btn btn-light" href="{{ route('core::system.departments.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
                         </div>
                         <div class="col-auto">
                             <button type="submit" class="btn btn-dark"><i class="mdi mdi-magnify"></i> Cari</button>
@@ -57,16 +57,16 @@
                                         <td class="py-2 text-end" nowrap>
                                             @if ($department->trashed())
                                                 @can('restore', $department)
-                                                    <form class="form-block form-confirm d-inline" action="{{ route('admin::system.departments.restore', ['department' => $department->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
+                                                    <form class="form-block form-confirm d-inline" action="{{ route('core::system.departments.restore', ['department' => $department->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
                                                         <button class="btn btn-soft-info rounded px-2 py-1" data-bs-toggle="tooltip" title="Pulihkan"><i class="mdi mdi-refresh"></i></button>
                                                     </form>
                                                 @endcan
                                             @else
                                                 @can('update', $department)
-                                                    <a class="btn btn-soft-warning rounded px-2 py-1" href="{{ route('admin::system.departments.show', ['department' => $department->id, 'next' => url()->current()]) }}" method="post" data-bs-toggle="tooltip" title="Ubah"><i class="mdi mdi-pencil-outline"></i></a>
+                                                    <a class="btn btn-soft-warning rounded px-2 py-1" href="{{ route('core::system.departments.show', ['department' => $department->id, 'next' => url()->current()]) }}" method="post" data-bs-toggle="tooltip" title="Ubah"><i class="mdi mdi-pencil-outline"></i></a>
                                                 @endcan
                                                 @can('kill', $department)
-                                                    <form class="form-block form-confirm d-inline" action="{{ route('admin::system.departments.destroy', ['department' => $department->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
+                                                    <form class="form-block form-confirm d-inline" action="{{ route('core::system.departments.destroy', ['department' => $department->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
                                                         <button class="btn btn-soft-danger rounded px-2 py-1" data-bs-toggle="tooltip" title="Hapus"><i class="mdi mdi-trash-can-outline"></i></button>
                                                     </form>
                                                 @endcan
@@ -78,9 +78,9 @@
                                         <td colspan="6">
                                             @include('components.notfound')
                                             @if (!request('trash'))
-                                                @can('store', App\Models\Departement::class)
+                                                @can('store', Modules\Core\Models\Departement::class)
                                                     <div class="mb-lg-5 mb-4 text-center">
-                                                        <a class="btn btn-soft-danger" href="{{ route('admin::system.departments.create', ['next' => url()->current()]) }}"><i class="mdi mdi-plus"></i> Buat departemen baru</a>
+                                                        <a class="btn btn-soft-danger" href="{{ route('core::system.departments.create', ['next' => url()->current()]) }}"><i class="mdi mdi-plus"></i> Buat departemen baru</a>
                                                     </div>
                                                 @endcan
                                             @endif
@@ -107,10 +107,10 @@
             <div class="card border-0">
                 <div class="card-body">Menu lainnya</div>
                 <div class="list-group list-group-flush border-top border-light">
-                    @can('store', App\Models\Departement::class)
-                        <a class="list-group-item list-group-item-action" href="{{ route('admin::system.departments.create', ['next' => url()->current()]) }}"><i class="mdi mdi-plus-circle-outline"></i> Buat departemen baru</a>
+                    @can('store', Modules\Core\Models\Departement::class)
+                        <a class="list-group-item list-group-item-action" href="{{ route('core::system.departments.create', ['next' => url()->current()]) }}"><i class="mdi mdi-plus-circle-outline"></i> Buat departemen baru</a>
                     @endcan
-                    <a class="list-group-item list-group-item-action text-danger" href="{{ route('admin::system.departments.index', ['trash' => !request('trash')]) }}"><i class="mdi mdi-trash-can-outline"></i> Lihat departemen yang {{ request('trash') ? 'tidak' : '' }} dihapus</a>
+                    <a class="list-group-item list-group-item-action text-danger" href="{{ route('core::system.departments.index', ['trash' => !request('trash')]) }}"><i class="mdi mdi-trash-can-outline"></i> Lihat departemen yang {{ request('trash') ? 'tidak' : '' }} dihapus</a>
                 </div>
             </div>
         </div>

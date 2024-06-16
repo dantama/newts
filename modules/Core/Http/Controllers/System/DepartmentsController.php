@@ -3,15 +3,15 @@
 namespace Modules\Core\Http\Controllers\System;
 
 use Illuminate\Http\Request;
-use App\Models\Departement;
 use Modules\Core\Http\Requests\System\Department\StoreRequest;
 use Modules\Core\Http\Requests\System\Department\UpdateRequest;
 use Modules\Core\Http\Controllers\Controller;
-use Modules\Core\Repositories\CompanyDepartmentRepository;
+use Modules\Core\Models\Departement;
+use Modules\Core\Repositories\OrganizationDepartmentRepository;
 
 class DepartmentsController extends Controller
 {
-    use CompanyDepartmentRepository;
+    use OrganizationDepartmentRepository;
 
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class DepartmentsController extends Controller
 
         $departments_count = Departement::count();
 
-        return view('admin::system.departments.index', compact('departments', 'departments_count'));
+        return view('core::system.departments.index', compact('departments', 'departments_count'));
     }
 
     /**
@@ -36,10 +36,9 @@ class DepartmentsController extends Controller
     public function create()
     {
         $this->authorize('store', Departement::class);
-
         $departments = Departement::all();
 
-        return view('admin::system.departments.create', compact('departments'));
+        return view('core::system.departments.create', compact('departments'));
     }
 
     /**
@@ -48,10 +47,8 @@ class DepartmentsController extends Controller
     public function store(StoreRequest $request)
     {
         if ($department = $this->storeCompanyDepartment($request->transformed()->toArray(), $request->user())) {
-
             return redirect()->next()->with('success', 'Departemen dengan nama <strong>' . $department->name . ' (' . $department->kd . ')</strong> telah berhasil dibuat.');
         }
-
         return redirect()->fail();
     }
 
@@ -61,10 +58,9 @@ class DepartmentsController extends Controller
     public function show(Departement $department)
     {
         $this->authorize('update', $department);
-
         $departments = Departement::all();
 
-        return view('admin::system.departments.show', compact('departments', 'department'));
+        return view('core::system.departments.show', compact('departments', 'department'));
     }
 
     /**
@@ -73,10 +69,8 @@ class DepartmentsController extends Controller
     public function update(Departement $department, UpdateRequest $request)
     {
         if ($department = $this->updateCompanyDepartment($department, $request->transformed()->toArray(), $request->user())) {
-
             return redirect()->next()->with('success', 'Departemen dengan nama <strong>' . $department->name . ' (' . $department->kd . ')</strong> telah berhasil diperbarui.');
         }
-
         return redirect()->fail();
     }
 
@@ -88,10 +82,8 @@ class DepartmentsController extends Controller
         $this->authorize('destroy', $department);
 
         if ($department = $this->destroyCompanyDepartment($department, $request->user())) {
-
             return redirect()->next()->with('success', 'Departemen dengan nama <strong>' . $department->name . ' (' . $department->kd . ')</strong> telah berhasil dihapus.');
         }
-
         return redirect()->fail();
     }
 
@@ -103,10 +95,8 @@ class DepartmentsController extends Controller
         $this->authorize('restore', $department);
 
         if ($department = $this->restoreCompanyDepartment($department, $request->user())) {
-
             return redirect()->next()->with('success', 'Departemen dengan nama <strong>' . $department->name . ' (' . $department->kd . ')</strong> telah berhasil dipulihkan.');
         }
-
         return redirect()->fail();
     }
 }

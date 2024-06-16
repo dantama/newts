@@ -16,6 +16,7 @@ use Modules\Auth\Notifications\ForgotPasswordNotification;
 use Modules\Account\Database\Factories\UserFactory;
 use App\Models\Traits\HasRole;
 use Illuminate\Support\Facades\Hash;
+use Modules\Core\Models\Member;
 
 class User extends Authenticatable
 {
@@ -130,9 +131,9 @@ class User extends Authenticatable
     /**
      * This has many logs.
      */
-    public function employee()
+    public function member()
     {
-        return $this->hasOne(Employee::class, 'user_id');
+        return $this->hasOne(Member::class, 'user_id');
     }
 
     /**

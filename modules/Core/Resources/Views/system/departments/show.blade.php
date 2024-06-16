@@ -1,4 +1,4 @@
-@extends('admin::layouts.default')
+@extends('core::layouts.default')
 
 @section('title', 'Departemen | ')
 @section('navtitle', 'Departemen')
@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-xxl-8 col-xl-10">
             <div class="d-flex align-items-center mb-4">
-                <a class="text-decoration-none" href="{{ request('next', route('admin::system.departments.index')) }}"><i class="mdi mdi-arrow-left-circle-outline mdi-36px"></i></a>
+                <a class="text-decoration-none" href="{{ request('next', route('core::system.departments.index')) }}"><i class="mdi mdi-arrow-left-circle-outline mdi-36px"></i></a>
                 <div class="ms-4">
                     <h2 class="mb-1">Ubah departemen</h2>
                     <div class="text-secondary">Silakan isi formulir di bawah ini untuk memperbarui informasi departemen {{ $department->name }}</div>
@@ -15,7 +15,7 @@
             </div>
             <div class="card mb-4 border-0">
                 <div class="card-body">
-                    <form class="form-block" action="{{ route('admin::system.departments.update', ['department' => $department->id, 'next' => request('next')]) }}" method="POST"> @csrf @method('PUT')
+                    <form class="form-block" action="{{ route('core::system.departments.update', ['department' => $department->id, 'next' => request('next')]) }}" method="POST"> @csrf @method('PUT')
                         <div class="row required mb-3">
                             <label class="col-lg-4 col-xl-3 col-form-label">Kode departemen</label>
                             <div class="col-xl-8 col-xxl-4">
@@ -78,7 +78,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-8 offset-lg-4 offset-xl-3">
                                 <button class="btn btn-soft-danger"><i class="mdi mdi-check"></i> Simpan</button>
-                                <a class="btn btn-ghost-light text-dark" href="{{ request('next', route('admin::system.departments.index')) }}"><i class="mdi mdi-arrow-left"></i> Kembali</a>
+                                <a class="btn btn-ghost-light text-dark" href="{{ request('next', route('core::system.departments.index')) }}"><i class="mdi mdi-arrow-left"></i> Kembali</a>
                             </div>
                         </div>
                     </form>

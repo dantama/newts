@@ -11,7 +11,7 @@
             <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_u13rakf7.json" class="mt-n5" background="transparent" speed="1" style="width: 600px; height: 400px;" loop autoplay></lottie-player>
         </div>
         <div class="h1 fw-bold mb-4">Tungguin ya ...</div>
-        <div class="lead text-muted">Kami sedang memeriksa browser kamu sebelum masuk ke <a href="{{ route('evaluation::dashboard') }}">Evaluasi Karyawan</a> dalam <span id="timer">3</span> detik</div>
+        <div class="lead text-muted">Kami sedang memeriksa browser kamu sebelum masuk ke <a href="{{ route('account::home') }}">Tapaksuci Apps</a> dalam <span id="timer">3</span> detik</div>
     </div>
 @endsection
 
@@ -23,7 +23,7 @@
                 sec--;
                 document.getElementById('timer').innerHTML = sec;
                 if (sec < 1) {
-                    window.location.href = "{{ route('evaluation::dashboard') }}";
+                    window.location.href = "{{ route('account::home') }}";
                     clearInterval(timer);
                 }
             }, 1000);

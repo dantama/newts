@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Policies;
+namespace Modules\Core\Policies;
 
 use Modules\Account\Models\User;
-use App\Models\Position;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Modules\Core\Models\Position;
 
 class PositionPolicy
 {

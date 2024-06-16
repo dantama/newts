@@ -15,15 +15,9 @@
                     <div class="d-block text-dark">Akun</div>
                 </a>
             </div>
-            <div class="col-4">
-                <a class="btn btn-ghost-light text-dark w-100" href="{{ route('evaluation::index') }}">
-                    <i class="mdi mdi-clipboard-text-outline mdi-36px"></i>
-                    <div class="d-block text-dark">Evaluasi</div>
-                </a>
-            </div>
-            @if (Gate::allows('admin::access'))
+            @if (Gate::allows('core::access'))
                 <div class="col-4">
-                    <a class="btn btn-ghost-light text-danger w-100" href="{{ route('admin::dashboard') }}">
+                    <a class="btn btn-ghost-light text-danger w-100" href="{{ route('core::dashboard') }}">
                         <i class="mdi mdi-account-lock-outline mdi-36px"></i>
                         <div class="d-block text-danger">Admin</div>
                     </a>

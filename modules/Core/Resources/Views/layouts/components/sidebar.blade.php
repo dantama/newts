@@ -12,7 +12,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('core::dashboard') }}"> <i class="mdi mdi-apps"></i> Dasbor </a>
                 </li>
-                @can('access', \Modules\Account\Models\Member::class)
+                @can('access', \Modules\Core\Models\Member::class)
                     <li class="divider">Anggota</li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('core::membership.members.index') }}"> <i class="mdi mdi-walk"></i> Anggota </a>
@@ -22,12 +22,12 @@
                     </li>
                 @endcan
                 <li class="divider">Sistem</li>
-                @can('access', \App\Models\Departement::class)
+                @can('access', \Modules\Core\Models\Departement::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('core::system.departments.index') }}"> <i class="mdi mdi-file-tree-outline"></i> Departemen </a>
                     </li>
                 @endcan
-                @can('access', \App\Models\Position::class)
+                @can('access', \Modules\Core\Models\Position::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('core::system.positions.index') }}"> <i class="mdi mdi-tag-outline"></i> Jabatan </a>
                     </li>

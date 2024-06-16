@@ -26,11 +26,11 @@ return new class extends Migration
         });
 
         Schema::create('org_trees', function (Blueprint $table) {
-            $table->unsignedSmallInteger('organization_id');
-            $table->unsignedSmallInteger('parent_id');
+            $table->unsignedInteger('organization_id');
+            $table->unsignedInteger('parent_id');
 
             $table->primary(['organization_id', 'parent_id']);
-            $table->foreign('position_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('organization_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('parent_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
         });
 
@@ -93,7 +93,7 @@ return new class extends Migration
 
         Schema::create('org_levels', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->tinyIncrements('type');
+            $table->unsignedSmallInteger('type');
             $table->string('kd')->unique();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
@@ -104,23 +104,37 @@ return new class extends Migration
         });
 
         Schema::create('org_members', function (Blueprint $table) {
-            $table->tinyIncrements('id');
-            $table->tinyIncrements('type');
-            $table->tinyIncrements('user_id');
-            $table->string('nbts');
+            $table->increments('id');
+            $table->unsignedSmallInteger('type');
+            $table->unsignedInteger('user_id');
+            $table->string('nbts')->nullable();
+            $table->string('nbm')->nullable();
+            $table->text('qr')->nullable();
             $table->timestamp('joined_at');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
-
 
         Schema::create('org_member_levels', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->tinyIncrements('member_id');
-            $table->tinyIncrements('level_id');
-            $table->text('meta');
+            $table->unsignedInteger('member_id');
+            $table->unsignedTinyInteger('level_id');
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
+            $table->text('meta')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
+        Schema::create('org_member_positions', function (Blueprint $table) {
+            $table->tinyIncrements('id');
+            $table->unsignedInteger('member_id');
+            $table->unsignedSmallInteger('position_id');
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
+            $table->text('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -6,14 +6,14 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
-class MemberLevel extends Model
+class MemberContract extends Model
 {
     use Restorable, Searchable;
 
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_member_levels';
+    protected $table = 'org_member_contracts';
 
     /**
      * The attributes that are mass assignable.

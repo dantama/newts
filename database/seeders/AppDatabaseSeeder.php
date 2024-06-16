@@ -18,85 +18,13 @@ class AppDatabaseSeeder extends Seeder
     public function run()
     {
         $settings = [
-            'app_short_name' => 'EPK',
-            'app_name' => 'Evaluasi Penilaian Kinerja',
-            'app_long_name' => 'Evaluasi Penilaian Kinerja (EPK)',
-            'meta_author' => 'pemad',
+            'app_short_name' => 'Tapak Suci',
+            'app_name' => 'Tapaksuci Apps',
+            'app_long_name' => 'Tapaksuci Application Management System',
+            'meta_author' => 'dantama',
             'meta_keywords' => 'website, laravel, application, app, apps',
             'meta_image' => '/img/logo/logo-icon-sq-512.png',
             'meta_description' => config('app.url'),
-            'evaluation_outputs' => [
-                [
-                    "min" => "0",
-                    "max" => "49.99",
-                    "grade" => "E",
-                    "description" => "Kinerja Tidak Dapat Diterima"
-                ],
-                [
-                    "min" => "49.99",
-                    "max" => "62.37",
-                    "grade" => "D",
-                    "description" => "Tidak memenuhi semua ekspektasi"
-                ],
-                [
-                    "min" => "62.37",
-                    "max" => "74.75",
-                    "grade" => "C",
-                    "description" => "Tidak memenuhi sebagian besar ekspektasi"
-                ],
-                [
-                    "min" => "74.75",
-                    "max" => "87.12",
-                    "grade" => "B",
-                    "description" => "Memenuhi target/ekspektasi"
-                ],
-                [
-                    "min" => "87.12",
-                    "max" => "99.50",
-                    "grade" => "A",
-                    "description" => "Melampaui semua target/ekspektasi"
-                ],
-                [
-                    "min" => "99.50",
-                    "max" => "100",
-                    "grade" => "A+",
-                    "description" => "Melampaui ekspektasi (Istimewa)"
-                ]
-            ],
-            'evaluation_options' => [
-                [
-                    'score' => 0,
-                    "label" => "Tidak pernah melakukan tugas ini.",
-                ],
-                [
-                    'score' => 1,
-                    "label" => "Memerlukan pelatihan, supervisi, dan coaching secara menyeluruh.",
-                ],
-                [
-                    'score' => 2,
-                    "label" => "Memerlukan pelatihan, supervisi, dan coaching untuk sebagian besar tugas.",
-                ],
-                [
-                    'score' => 3,
-                    "label" => "Memerlukan pelatihan, supervisi, dan coaching untuk beberapa tugas.",
-                ],
-                [
-                    'score' => 4,
-                    "label" => "Tidak memerlukan pelatihan, tetapi memerlukan supervisi dan coaching.",
-                ],
-                [
-                    'score' => 5,
-                    "label" => "Tidak memerlukan pelatihan, supervisi, maupun coaching."
-                ]
-            ],
-            'evaluation_default_options' => [
-                "Tidak pernah melakukan tugas ini.",
-                "Memerlukan pelatihan, supervisi, dan coaching secara menyeluruh.",
-                "Memerlukan pelatihan, supervisi, dan coaching untuk sebagian besar tugas.",
-                "Memerlukan pelatihan, supervisi, dan coaching untuk beberapa tugas.",
-                "Tidak memerlukan pelatihan, tetapi memerlukan supervisi dan coaching.",
-                "Tidak memerlukan pelatihan, supervisi, maupun coaching."
-            ]
         ];
 
         foreach ($settings as $key => $value) {
@@ -106,32 +34,24 @@ class AppDatabaseSeeder extends Seeder
         $permissions = [
             'App' => [
                 'Config' => ['write'],
-                'Departement' => ['read', 'write', 'delete'],
                 'Document' => ['read', 'write', 'delete'],
                 'DocumentSignature' => ['read', 'write', 'delete'],
-                'Position' => ['read', 'write', 'delete'],
-                'Contract' => ['read', 'write', 'delete'],
                 'Role' => ['read', 'write', 'delete'],
                 'Permission' => ['read', 'write', 'delete'],
             ],
             'Account' => [
                 'User' => ['read', 'write', 'delete', 'cross-login'],
                 'UserLog' => ['read', 'delete'],
-                'Employee' => ['read', 'write', 'delete'],
-                'EmployeeContract' => ['read', 'write', 'delete'],
-                'EmployeePosition' => ['read', 'write', 'delete'],
             ],
-            'evaluation' => [
-                'Evaluation' => ['read', 'write', 'delete'],
-                'EvaluationCategory' => ['read', 'write', 'delete'],
-                'EvaluationEmployee' => ['read', 'write', 'delete', 'resume'],
-                'EvaluationComponent' => ['read', 'write', 'delete'],
-                'EvaluationResponden' => ['read', 'write', 'delete'],
-                'EvaluationQuestion' => ['read', 'write', 'delete'],
-                'EvaluationResponse' => ['read', 'write', 'delete'],
-                'EvaluationTable' => ['read', 'write', 'delete'],
-                'EvaluationSummary' => ['read', 'write', 'delete'],
-                'EvaluationReport' => ['read', 'write', 'delete'],
+            'core' => [
+                'Organization' => ['read', 'write', 'delete'],
+                'Departement' => ['read', 'write', 'delete'],
+                'Position' => ['read', 'write', 'delete'],
+                'Contract' => ['read', 'write', 'delete'],
+                'Member' => ['read', 'write', 'delete'],
+                'MemberPosition' => ['read', 'write', 'delete'],
+                'MemberLevel' => ['read', 'write', 'delete'],
+                'Manager' => ['read', 'write', 'delete'],
             ],
         ];
 
@@ -155,13 +75,9 @@ class AppDatabaseSeeder extends Seeder
                 'name' => 'Super Administrator',
                 'role' => Permission::all()->pluck('id')
             ], [
-                'kd' => 'director',
-                'name' => 'Direktur',
+                'kd' => 'admin',
+                'name' => 'Administrator',
                 'role' => Permission::whereNotIn('key', ['cross-login-users'])->pluck('id')
-            ], [
-                'kd' => 'manager',
-                'name' => 'Manajer',
-                'role' => Permission::whereNotIn('key', ['cross-login-users'])->whereNotIn('module', ['App'])->pluck('id')
             ],
         ];
 

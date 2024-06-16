@@ -3,10 +3,13 @@
 namespace Modules\Core\Models;
 
 use App\Enums\LevelTypeEnum;
+use App\Models\Traits\Restorable\Restorable;
+use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Level extends Model
 {
+    use Restorable, Searchable;
     /**
      * The table associated with the model.
      */

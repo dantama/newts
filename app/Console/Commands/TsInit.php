@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use Laravel\Passport\ClientRepository;
 use Symfony\Component\Console\Output\StreamOutput;
 
-class EpaInit extends Command
+class TsInit extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'epa:init';
+    protected $signature = 'ts:init';
 
     /**
      * The console command description.

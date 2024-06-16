@@ -1,4 +1,4 @@
-@extends('admin::layouts.default')
+@extends('core::layouts.default')
 
 @section('title', 'Dashboard ')
 
@@ -27,8 +27,8 @@
                             <div class="float-end my-4">
                                 <i class="mdi mdi-file-tree-outline h2 text-primary mb-0"></i>
                             </div>
-                            <div class="display-4">{{ $evaluation_count }}</div>
-                            <small class="text-muted">Jumlah evaluasi</small>
+                            <div class="display-4">{{ $member_count }}</div>
+                            <small class="text-muted">Jumlah anggota</small>
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                             <div class="float-end my-4">
                                 <i class="mdi mdi-tag-outline h2 text-danger mb-0"></i>
                             </div>
-                            <div class="display-4">{{ $tables_count }}</div>
-                            <small class="text-muted">Jumlah area</small>
+                            <div class="display-4">{{ $warrior_count }}</div>
+                            <small class="text-muted">Jumlah pendekar</small>
                         </div>
                     </div>
                 </div>
@@ -49,8 +49,8 @@
                             <div class="float-end my-4">
                                 <i class="mdi mdi-account-box-multiple-outline h2 text-success mb-0"></i>
                             </div>
-                            <div class="display-4">{{ $employees_count ?? 0 }}</div>
-                            <small class="text-muted">Jumlah karyawan</small>
+                            <div class="display-4">{{ $cadre_count ?? 0 }}</div>
+                            <small class="text-muted">Jumlah kader</small>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                             <div class="float-end my-4">
                                 <i class="mdi mdi-account-group-outline h2 text-warning mb-0"></i>
                             </div>
-                            <div class="display-4">{{ $users_count ?? 0 }}</div>
+                            <div class="display-4">{{ $user_count ?? 0 }}</div>
                             <small class="text-muted">Jumlah pengguna</small>
                         </div>
                     </div>

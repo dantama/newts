@@ -1,4 +1,4 @@
-@extends('admin::layouts.default')
+@extends('core::layouts.default')
 
 @section('title', 'Peran | ')
 @section('navtitle', 'Peran')
@@ -12,13 +12,13 @@
                         <i class="mdi mdi-format-list-bulleted float-left mr-2"></i> Daftar peran
                     </div>
                     <div class="card-body border-top">
-                        <form class="form-block row gy-2 gx-2" action="{{ route('admin::system.roles.index') }}" method="get">
+                        <form class="form-block row gy-2 gx-2" action="{{ route('core::system.roles.index') }}" method="get">
                             <input name="trash" type="hidden" value="{{ request('trash') }}">
                             <div class="flex-grow-1 col-auto">
                                 <input class="form-control" name="search" placeholder="Cari nama ..." value="{{ request('search') }}" />
                             </div>
                             <div class="col-auto">
-                                <a class="btn btn-light" href="{{ route('admin::system.roles.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
+                                <a class="btn btn-light" href="{{ route('core::system.roles.index', request()->only('trashed', 'closed')) }}"><i class="mdi mdi-refresh"></i> <span class="d-sm-none">Reset</span></a>
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-dark"><i class="mdi mdi-magnify"></i> Cari</button>
@@ -47,10 +47,10 @@
                                     </div>
                                 </div>
                                 @can('update', $role)
-                                    <a class="btn btn-soft-primary btn-sm rounded" href="{{ route('admin::system.roles.show', ['role' => $role->id]) }}"><i class="mdi mdi-eye-outline"></i> Lihat detail</a>
+                                    <a class="btn btn-soft-primary btn-sm rounded" href="{{ route('core::system.roles.show', ['role' => $role->id]) }}"><i class="mdi mdi-eye-outline"></i> Lihat detail</a>
                                 @endcan
                                 @can('destroy', $role)
-                                    <form class="d-inline form-block form-confirm" action="{{ route('admin::system.roles.destroy', ['role' => $role->id]) }}" method="POST"> @csrf @method('DELETE')
+                                    <form class="d-inline form-block form-confirm" action="{{ route('core::system.roles.destroy', ['role' => $role->id]) }}" method="POST"> @csrf @method('DELETE')
                                         <button class="btn btn-soft-danger btn-sm rounded" data-toggle="tooltip" title="Hapus permanen"><i class="mdi mdi-delete-forever-outline"></i></button>
                                     </form>
                                 @endcan
@@ -90,7 +90,7 @@
                         <i class="mdi mdi-shield-plus-outline float-left mr-2"></i> Tambah peran
                     </div>
                     <div class="card-body border-top">
-                        <form class="form-block" action="{{ route('admin::system.roles.store') }}" method="POST"> @csrf
+                        <form class="form-block" action="{{ route('core::system.roles.store') }}" method="POST"> @csrf
                             <div class="mb-3">
                                 <label class="form-label">Kode</label>
                                 <input type="text" class="form-control @error('kd') is-invalid @enderror" name="kd" value="{{ old('kd') }}" required autocomplete="off">
@@ -105,7 +105,7 @@
                                     <small class="text-danger"> {{ $message }} </small>
                                 @enderror
                             </div>
-                            <div class="mb-3 mb-0">
+                            <div class="mb-0 mb-3">
                                 <button class="btn btn-soft-danger"><i class="mdi mdi-check"></i> Simpan</button>
                             </div>
                         </form>

@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Modules\Admin\Http\Requests\System\Role\StoreRequest;
-use Modules\Admin\Http\Requests\System\Role\UpdateRequest;
-use Modules\Admin\Http\Requests\System\Role\SyncPermissionsRequest;
-use Modules\Admin\Http\Controllers\Controller;
+use Modules\Core\Http\Requests\System\Role\StoreRequest;
+use Modules\Core\Http\Requests\System\Role\UpdateRequest;
+use Modules\Core\Http\Requests\System\Role\SyncPermissionsRequest;
+use Modules\Core\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
@@ -29,7 +28,7 @@ class RoleController extends Controller
 
         $roles_count = Role::count();
 
-        return view('admin::system.roles.index', compact('roles', 'roles_count'));
+        return view('core::system.roles.index', compact('roles', 'roles_count'));
     }
 
     /**
@@ -41,7 +40,7 @@ class RoleController extends Controller
 
         $roles = Role::withoutTrashed()->get();
 
-        return view('admin::system.roles.create', compact('roles'));
+        return view('core::system.roles.create', compact('roles'));
     }
 
     /**
@@ -51,7 +50,7 @@ class RoleController extends Controller
     {
         $role = new Role(Arr::only($request->transformed()->toArray(), ['kd', 'name']));
         if ($role->save()) {
-            Auth::user()->log('membuat peran baru ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', Role::class, $role->id);
+            $request->user()->log('membuat peran baru ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', Role::class, $role->id);
             return redirect()->next()->with('success', 'Peran dengan nama <strong>' . $role->name . ' (' . $role->kd . ')</strong> telah berhasil dibuat.');
         }
 
@@ -68,7 +67,7 @@ class RoleController extends Controller
         $role->loadCount('users');
         $permissions = Permission::all();
 
-        return view('admin::system.roles.show', compact('role', 'permissions'));
+        return view('core::system.roles.show', compact('role', 'permissions'));
     }
 
     /**
@@ -78,7 +77,7 @@ class RoleController extends Controller
     {
         $role = $role->fill(Arr::only($request->transformed()->toArray(), ['kd', 'name']));
         if ($role->save()) {
-            Auth::user()->log('memperbarui peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', CompanyRole::class, $role->id);
+            $request->user()->log('memperbarui peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', Role::class, $role->id);
             return redirect()->next()->with('success', 'Peran <strong>' . $role->name . ' (' . $role->kd . ')</strong> telah berhasil diperbarui.');
         }
 
@@ -91,7 +90,7 @@ class RoleController extends Controller
     public function permissions(Role $role, SyncPermissionsRequest $request)
     {
         if ($role->permissions()->sync($request->transformed()->toArray()['permissions'] ?? [])) {
-            Auth::user()->log('memperbarui hak akses peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', CompanyRole::class, $role->id);
+            $request->user()->log('memperbarui hak akses peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', Role::class, $role->id);
             return redirect()->next()->with('success', 'Hak akses peran <strong>' . $role->name . ' (' . $role->kd . ')</strong> telah berhasil diperbarui.');
         }
 
@@ -101,12 +100,12 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role, Request $request)
     {
         $this->authorize('destroy', $role);
 
         if (!$role->trashed() && $role->delete()) {
-            Auth::user()->log('menghapus peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', CompanyRole::class, $role->id);
+            $request->user()->log('menghapus peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', Role::class, $role->id);
 
             return redirect()->next()->with('success', 'Peran <strong>' . $role->name . ' (' . $role->kd . ')</strong> telah berhasil dihapus.');
         }
@@ -117,12 +116,12 @@ class RoleController extends Controller
     /**
      * Restore the specified resource from storage.
      */
-    public function restore(Role $role)
+    public function restore(Role $role, Request $request)
     {
         $this->authorize('restore', $role);
 
         if ($role->trashed() && $role->restore()) {
-            Auth::user()->log('memulihkan peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', CompanyRole::class, $role->id);
+            $request->user()->log('memulihkan peran ' . $role->name . ' <strong>[ID: ' . $role->id . ']</strong>', Role::class, $role->id);
 
             return redirect()->next()->with('success', 'Peran <strong>' . $role->name . ' (' . $role->kd . ')</strong> telah berhasil dipulihkan.');
         }

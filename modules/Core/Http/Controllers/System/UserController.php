@@ -3,12 +3,12 @@
 namespace Modules\Core\Http\Controllers\System;
 
 use App\Models\Role;
-use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash as FacadesHash;
 use Modules\Account\Models\User;
 use Modules\Account\Repositories\UserRepository;
-use Modules\Admin\Http\Requests\System\User\StoreRequest;
-use Modules\Admin\Http\Controllers\Controller;
+use Modules\Core\Http\Requests\System\User\StoreRequest;
+use Modules\Core\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -28,7 +28,7 @@ class UserController extends Controller
 
         $users_count = User::count();
 
-        return view('admin::system.users.index', compact('users', 'users_count'));
+        return view('core::system.users.index', compact('users', 'users_count'));
     }
 
     /**
@@ -52,7 +52,7 @@ class UserController extends Controller
         $user->load('meta', 'roles');
         $roles = Role::get();
 
-        return view('admin::system.users.show', compact('user', 'roles'));
+        return view('core::system.users.show', compact('user', 'roles'));
     }
 
     /**
@@ -128,7 +128,7 @@ class UserController extends Controller
     {
         $this->authorize('cross-login', $user);
 
-        if (!Hash::check($request->input('password'), $request->user()->password))
+        if (!FacadesHash::check($request->input('password'), $request->user()->password))
             return redirect()->fail('Mohon maaf, sandi yang Anda masukkan salah, silakan ulangi kembali!');
 
         if ($user = $this->crossLoginUser($request, $user)) {
