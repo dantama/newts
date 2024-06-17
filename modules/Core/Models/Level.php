@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Models;
 
-use App\Enums\LevelTypeEnum;
+use Modules\Core\Enums\LevelTypeEnum;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +13,7 @@ class Level extends Model
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_levels';
+    protected $table = 'levels';
 
     /**
      * The attributes that are mass assignable.

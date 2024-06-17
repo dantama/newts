@@ -2,19 +2,18 @@
 
 namespace Modules\Core\Models;
 
-use Modules\Core\Models\Position;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
-class Departement extends Model
+class OrganizationPosition extends Model
 {
     use Restorable, Searchable;
 
     /**
      * The table associated with the model.
      */
-    protected $table = 'depts';
+    protected $table = 'org_positions';
 
     /**
      * The attributes that are mass assignable.
@@ -22,11 +21,8 @@ class Departement extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'kd',
-        'name',
-        'description',
-        'parent_id',
-        'is_visible',
+        'org_dept_id',
+        'position_id',
     ];
 
     /**
@@ -44,10 +40,18 @@ class Departement extends Model
     ];
 
     /**
-     * belongs to user.
+     * belongs to departement.
      */
-    public function positions()
+    public function departement()
     {
-        return $this->hasMany(Position::class, 'dept_id');
+        return $this->belongsTo(OrganizationDepartement::class, 'org_dept_id');
+    }
+
+    /**
+     * belongs to organization.
+     */
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id');
     }
 }

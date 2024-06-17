@@ -2,6 +2,7 @@
 
 namespace Modules\Account\Database\Seeders;
 
+use Carbon\Carbon;
 use Modules\Account\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,7 @@ class AccountDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(100)->create();
+        User::factory()->count(1)->create();
 
         $users = User::all();
 
@@ -26,5 +27,11 @@ class AccountDatabaseSeeder extends Seeder
 
         $user = $users->first();
         $user->update(['username' => 'root']);
+
+        $user->member()->create([
+            'type' => 1,
+            'organization_id' => 1,
+            'joined_at' => Carbon::parse(now()),
+        ]);
     }
 }

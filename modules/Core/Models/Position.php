@@ -2,12 +2,12 @@
 
 namespace Modules\Core\Models;
 
-use App\Enums\PositionLevelEnum;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Departement;
 use App\Models\Traits\Metable\Metable;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
+use Modules\Core\Enums\PositionLevelEnum;
 
 class Position extends Model
 {
@@ -16,12 +16,12 @@ class Position extends Model
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_positions';
+    protected $table = 'positions';
 
     /**
      * Define the meta table
      */
-    protected $metaTable = 'org_position_meta';
+    protected $metaTable = 'position_meta';
 
     /**
      * Define the meta key name
@@ -43,7 +43,6 @@ class Position extends Model
         'name',
         'description',
         'level',
-        'dept_id',
         'is_visible',
     ];
 
@@ -64,19 +63,11 @@ class Position extends Model
     ];
 
     /**
-     * belongs to user.
-     */
-    public function departement()
-    {
-        return $this->belongsTo(Departement::class, 'dept_id')->withDefault();
-    }
-
-    /**
      * This belongs to many parents.
      */
     public function parents()
     {
-        return $this->belongsToMany(self::class, 'org_position_trees', 'position_id', 'parent_id')->orderBy('level');
+        return $this->belongsToMany(self::class, 'position_trees', 'position_id', 'parent_id')->orderBy('level');
     }
 
     /**
@@ -84,7 +75,7 @@ class Position extends Model
      */
     public function children()
     {
-        return $this->belongsToMany(self::class, 'org_position_trees', 'parent_id', 'position_id')->orderBy('level');
+        return $this->belongsToMany(self::class, 'position_trees', 'parent_id', 'position_id')->orderBy('level');
     }
 
     /**
@@ -93,13 +84,5 @@ class Position extends Model
     public function scopeVisibility($query, $bool = true)
     {
         return $query->whereIsVisible($bool ? 1 : 0);
-    }
-
-    /**
-     * Scope dept.
-     */
-    public function scopeWhenDeptId($query, $data)
-    {
-        return $query->when($data, fn ($d) => $d->where('dept_id', $data));
     }
 }

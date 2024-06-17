@@ -14,12 +14,12 @@ class Contract extends Model
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_contracts';
+    protected $table = 'contracts';
 
     /**
      * Define the meta table
      */
-    public $metaTable = 'org_contract_meta';
+    public $metaTable = 'contract_meta';
 
     /**
      * The attributes that are mass assignable.

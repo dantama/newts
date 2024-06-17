@@ -2,15 +2,31 @@
 
 namespace Modules\Core\Models;
 
+use App\Models\Traits\Metable\Metable;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
-    use Restorable, Searchable;
+    use Restorable, Searchable, Metable;
 
     protected $table = "organizations";
+
+    /**
+     * Define the meta table
+     */
+    protected $metaTable = 'organizations_meta';
+
+    /**
+     * Define the meta key name
+     */
+    public $metaKeyName = 'organization_id';
+
+    /**
+     * Prevent meta from being populated
+     */
+    public $hideMeta = true;
 
     /**
      * The attributes that are mass assignable.

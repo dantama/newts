@@ -1,9 +1,9 @@
 <?php
 
-namespace Database\Seeders;
+namespace Modules\Core\Database\Seeders;
 
-use App\Models\Contract;
 use Illuminate\Database\Seeder;
+use Modules\Core\Models\Contract;
 
 class ContractSeeder extends Seeder
 {
@@ -14,16 +14,20 @@ class ContractSeeder extends Seeder
      */
     public function run()
     {
+        $contracts = array(
+            array(
+                "kd" => 'sk',
+                "name" => "Surat keterangan",
+                "description" => "Surat keterangan",
+            ),
+        );
 
-        $contracts = [
-            'pkwt' => 'Perjanjian Kerja Waktu Tertentu',
-            'pkwtt' => 'Perjanjian Kerja Waktu Tidak Tertentu',
-            'magang' => 'Management Training (Magang)',
-            'honorer' => 'Honorer',
-        ];
-
-        foreach ($contracts as $kd => $name) {
-            Contract::create(compact('kd', 'name'));
+        foreach ($contracts as $contract) {
+            Contract::create([
+                'kd' => $contract['kd'],
+                'name' => $contract['name'],
+                'description' => $contract['description']
+            ]);
         }
     }
 }

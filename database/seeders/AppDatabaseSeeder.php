@@ -44,15 +44,25 @@ class AppDatabaseSeeder extends Seeder
                 'UserLog' => ['read', 'delete'],
             ],
             'core' => [
-                'Organization' => ['read', 'write', 'delete'],
+                'Contract' => ['read', 'write', 'delete'],
                 'Departement' => ['read', 'write', 'delete'],
                 'Position' => ['read', 'write', 'delete'],
-                'Contract' => ['read', 'write', 'delete'],
+                'Level' => ['read', 'write', 'delete'],
+                'Organization' => ['read', 'write', 'delete'],
+                'OrganizationDepartement' => ['read', 'write', 'delete'],
+                'OrganizationPosition' => ['read', 'write', 'delete'],
                 'Member' => ['read', 'write', 'delete'],
                 'MemberPosition' => ['read', 'write', 'delete'],
+                'MemberContract' => ['read', 'write', 'delete'],
                 'MemberLevel' => ['read', 'write', 'delete'],
                 'Manager' => ['read', 'write', 'delete'],
             ],
+            'blog' => [
+                'BlogPost' => ['read', 'write', 'delete'],
+                'BlogCategory' => ['read', 'write', 'delete'],
+                'BlogPostComment' => ['read', 'write', 'delete'],
+                'BlogPostTag' => ['read', 'write', 'delete'],
+            ]
         ];
 
         foreach ($permissions as $module => $models) {

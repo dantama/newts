@@ -24,8 +24,11 @@ class ReferenceServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/'.$this->moduleNameLower.'.php', 'modules.'.$this->moduleNameLower
+            __DIR__ . '/../Config/' . $this->moduleNameLower . '.php',
+            'modules.' . $this->moduleNameLower
         );
     }
 

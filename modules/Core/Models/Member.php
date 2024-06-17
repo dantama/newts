@@ -2,25 +2,42 @@
 
 namespace Modules\Core\Models;
 
+use App\Models\Traits\Metable\Metable;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Modules\Account\Models\User;
+use Modules\Core\Enums\MembershipTypeEnum;
 
 class Member extends Model
 {
-    use Restorable, Searchable;
+    use Restorable, Searchable, Metable;
 
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_members';
+    protected $table = 'members';
+
+    /**
+     * Define the meta table
+     */
+    protected $metaTable = 'members_meta';
+
+    /**
+     * Define the meta key name
+     */
+    public $metaKeyName = 'member_id';
+
+    /**
+     * Prevent meta from being populated
+     */
+    public $hideMeta = true;
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'user_id', 'nbts', 'nbm', 'qr', 'regency_id', 'joined_at'
+        'user_id', 'nbts', 'nbm', 'qr', 'joined_at'
     ];
 
     /**
@@ -36,7 +53,7 @@ class Member extends Model
     ];
 
     protected $casts = [
-        'perwil' => 'boolean',
+        'type' => MembershipTypeEnum::class
     ];
 
     /**

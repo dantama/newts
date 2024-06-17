@@ -5,11 +5,10 @@ namespace App\Enums;
 enum OrganizationTypeEnum: int
 {
     case CENTER = 1;
-    case PROVINCE = 2;
+    case REGION = 2;
     case PERWIL = 3;
-    case REGION = 4;
-    case AREA = 5;
-    case BRANCH = 6;
+    case AREA   = 4;
+    case BRANCH = 5;
 
     /**
      * Get the label accessor with label() object
@@ -18,11 +17,10 @@ enum OrganizationTypeEnum: int
     {
         return match ($this) {
             self::CENTER => 'Pusat',
-            self::PROVINCE => 'Provinsi',
-            self::PERWIL => 'Perwakilan wilayah',
             self::REGION => 'Wilayah',
-            self::AREA => 'Daerah',
-            self::BRANCH => 'Cabanng'
+            self::PERWIL => 'Perwakilan wilayah',
+            self::AREA   => 'Daerah',
+            self::BRANCH => 'Cabang'
         };
     }
 }

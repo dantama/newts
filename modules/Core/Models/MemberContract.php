@@ -13,13 +13,13 @@ class MemberContract extends Model
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_member_contracts';
+    protected $table = 'member_contracts';
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'member_id', 'level_id', 'year', 'meta'
+        'member_id', 'contract_id', 'start_at', 'end_at'
     ];
 
     /**
@@ -57,8 +57,8 @@ class MemberContract extends Model
     }
 
 
-    public function level()
+    public function contract()
     {
-        return $this->belongsTo(Level::class, 'level_id');
+        return $this->belongsTo(Contract::class, 'contract_id');
     }
 }
