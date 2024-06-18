@@ -41,9 +41,8 @@
                                 @forelse($departments as $department)
                                     <tr @if ($department->trashed()) class="table-light text-muted" @endif>
                                         <td>{{ $loop->iteration + $departments->firstItem() - 1 }}</td>
-                                        <td nowrap>
+                                        <td>
                                             <strong>{{ $department->name }}</strong>
-                                            <div class="text-muted">{{ $department->kd }}</div>
                                         </td>
                                         <td class="text-center">
                                             @if ($department->is_visible)

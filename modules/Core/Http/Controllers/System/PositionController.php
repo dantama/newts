@@ -24,9 +24,7 @@ class PositionController extends Controller
 
         $departments = Departement::all();
 
-        $positions = Position::with('departement')
-            ->whenDeptId($request->get('departement'))
-            ->whenTrashed($request->get('trash'))
+        $positions = Position::whenTrashed($request->get('trash'))
             ->search($request->get('search'))
             ->paginate($request->get('limit', 10));
 
@@ -43,10 +41,9 @@ class PositionController extends Controller
         $this->authorize('store', Position::class);
 
         $roles = Role::all();
-        $departments = Departement::all();
-        $positions = Position::with('departement')->get()->groupBy('department.name');
+        $positions = Position::get();
 
-        return view('core::system.positions.create', compact('roles', 'positions', 'departments'));
+        return view('core::system.positions.create', compact('roles', 'positions'));
     }
 
     /**

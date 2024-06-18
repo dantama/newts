@@ -16,20 +16,6 @@
             <form class="form-block" action="{{ route('core::system.positions.store', ['next' => request('next')]) }}" method="POST"> @csrf
                 <div class="row justify-content-center">
                     <div class="col-xxl-5 col-xl-6">
-                        <div class="row mb-3">
-                            <label class="col-lg-4 col-xl-3 col-form-label">Departemen</label>
-                            <div class="col-xl-8 col-xxl-6">
-                                <select class="form-select @error('dept_id') is-invalid @enderror" name="dept_id">
-                                    <option value="">-- Pilih --</option>
-                                    @foreach ($departments as $_department)
-                                        <option value="{{ $_department->id }}" @selected(old('dept_id') == $_department->id)>{{ $_department->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('dept_id')
-                                    <small class="text-danger d-block"> {{ $message }} </small>
-                                @enderror
-                            </div>
-                        </div>
                         <div class="row required mb-3">
                             <label class="col-lg-4 col-xl-3 col-form-label">Kode jabatan</label>
                             <div class="col-xl-8 col-xxl-4">
@@ -92,17 +78,11 @@
                             <label class="col-lg-4 col-xl-3 col-form-label">Atasan</label>
                             <div class="col-xl-8 col-xxl-6">
                                 <select class="form-select @error('parents') is-invalid @enderror" name="parents[]" style="height: 240px;" multiple>
-                                    @foreach ($positions as $department => $_positions)
+                                    @foreach ($positions as $department => $_position)
                                         @if ($loop->first)
                                             <option value="">-- Pilih --</option>
                                         @endif
-                                        <optgroup label="{{ $department ?: 'Lainnya' }}">
-                                            @forelse($_positions as $_position)
-                                                <option value="{{ $_position->id }}" @selected(in_array($_position->id, old('parents', [])))>{{ $_position->name }}</option>
-                                            @empty
-                                                <option value="">Tidak ada jabatan</option>
-                                            @endforelse
-                                        </optgroup>
+                                        <option value="{{ $_position->id }}" @selected(in_array($_position->id, old('parents', [])))>{{ $_position->name }}</option>
                                     @endforeach
                                 </select>
                                 <small class="text-muted d-block mt-1">Tekan dan tahan <code>ctrl</code> untuk menghapus atau memilih lebih dari dua</small>
@@ -115,17 +95,11 @@
                             <label class="col-lg-4 col-xl-3 col-form-label">Bawahan</label>
                             <div class="col-xl-8 col-xxl-6">
                                 <select class="form-select @error('children.0') is-invalid @enderror" name="children[]" style="height: 240px;" multiple>
-                                    @foreach ($positions as $department => $_positions)
+                                    @foreach ($positions as $department => $_position)
                                         @if ($loop->first)
                                             <option value="">-- Pilih --</option>
                                         @endif
-                                        <optgroup label="{{ $department ?: 'Lainnya' }}">
-                                            @forelse($_positions as $_position)
-                                                <option value="{{ $_position->id }}" @selected(in_array($_position->id, old('children', [])))>{{ $_position->name }}</option>
-                                            @empty
-                                                <option value="">Tidak ada jabatan</option>
-                                            @endforelse
-                                        </optgroup>
+                                        <option value="{{ $_position->id }}" @selected(in_array($_position->id, old('children', [])))>{{ $_position->name }}</option>
                                     @endforeach
                                 </select>
                                 <small class="text-muted d-block mt-1">Tekan dan tahan <code>ctrl</code> untuk menghapus atau memilih lebih dari dua</small>

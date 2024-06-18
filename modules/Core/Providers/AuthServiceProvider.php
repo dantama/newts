@@ -5,7 +5,8 @@ namespace Modules\Core\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Modules\Account\Models\User;
-use Modules\Account\Policies as AccountPolicy;
+use Modules\Core\Policies;
+use Modules\Core\Models;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,8 +14,18 @@ class AuthServiceProvider extends ServiceProvider
      * The policy mappings for the application.
      */
     protected $policies = [
-        AccountPolicy\UserPolicy::class,
-        AccountPolicy\UserLogPolicy::class,
+        Models\Contract::class => Policies\ContractPolicy::class,
+        Models\Departement::class => Policies\DepartementPolicy::class,
+        Models\Level::class => Policies\LevelPolicy::class,
+        Models\Manager::class => Policies\ManagerPolicy::class,
+        Models\Member::class => Policies\MemberPolicy::class,
+        Models\MemberContract::class => Policies\MemberContractPolicy::class,
+        Models\MemberLevel::class => Policies\MemberLevelPolicy::class,
+        Models\MemberPosition::class => Policies\MemberPositionPolicy::class,
+        Models\Position::class => Policies\PositionPolicy::class,
+        Models\Unit::class => Policies\UnitPolicy::class,
+        Models\UnitDepartement::class => Policies\UnitDepartementPolicy::class,
+        Models\UnitPosition::class => Policies\UnitPositionPolicy::class,
     ];
 
     /**

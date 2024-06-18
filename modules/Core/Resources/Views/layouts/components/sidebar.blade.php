@@ -1,8 +1,8 @@
 <div class="sidebar bg-dark open border-end text-white" style="z-index: 9999;">
     <div class="sidebar-header">
         <div class="d-flex align-items-center justify-content-center border-bottom text-center" style="height: 80px;">
-            <img height="24" src="{{ asset('img/logo/logo-icon-bw-32.png') }}" alt="">
-            <div class="h5 mb-0 ps-2">P<span class="text-danger">é</span>Mad</div>
+            <img height="24" src="{{ asset('img/logo/logo-icon.png') }}" alt="">
+            <div class="h5 mb-0 ps-2">{{ env('APP_NAME') }}</div>
         </div>
     </div>
     <div class="sidebar-body">
@@ -12,15 +12,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('core::dashboard') }}"> <i class="mdi mdi-apps"></i> Dasbor </a>
                 </li>
-                @can('access', \Modules\Core\Models\Member::class)
-                    <li class="divider">Anggota</li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('core::membership.members.index') }}"> <i class="mdi mdi-walk"></i> Anggota </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('core::membership.members.index') }}"> <i class="mdi mdi-file-document-multiple-outline"></i> Surat keterangan </a>
-                    </li>
-                @endcan
                 <li class="divider">Sistem</li>
                 @can('access', \Modules\Core\Models\Departement::class)
                     <li class="nav-item">

@@ -14,7 +14,7 @@ class Departement extends Model
     /**
      * The table associated with the model.
      */
-    protected $table = 'depts';
+    protected $table = 'departements';
 
     /**
      * The attributes that are mass assignable.
@@ -43,11 +43,8 @@ class Departement extends Model
         'deleted_at', 'created_at', 'updated_at'
     ];
 
-    /**
-     * belongs to user.
-     */
-    public function positions()
+    public function unit_departement()
     {
-        return $this->hasMany(Position::class, 'dept_id');
+        return $this->hasMany(UnitDepartement::class, 'dept_id');
     }
 }

@@ -50,11 +50,10 @@
                                 @forelse($positions as $position)
                                     <tr @if ($position->trashed()) class="table-light text-muted" @endif>
                                         <td>{{ $loop->iteration + $positions->firstItem() - 1 }}</td>
-                                        <td nowrap>
+                                        <td>
                                             <div class="fw-bold">
                                                 {{ $position->name }}
                                             </div>
-                                            <small class="text-muted">{{ $position->departement->name }}</small>
                                         </td>
                                         <td class="text-center">
                                             @if ($position->is_visible)

@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('depts', function (Blueprint $table) {
+        Schema::create('departements', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kd');
             $table->string('name')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique('kd');
-            $table->foreign('parent_id')->references('id')->on('depts')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('parent_id')->references('id')->on('departements')->onUpdate('cascade')->onDelete('set null');
         });
 
         Schema::create('positions', function (Blueprint $table) {
@@ -74,7 +74,7 @@ return new class extends Migration
 
         MetableSchema::create('contract_meta', 'contract_id', 'contracts', 'unsignedTinyInteger');
 
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('units', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kd');
             $table->string('name')->nullable();
@@ -85,20 +85,20 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('org_trees', function (Blueprint $table) {
-            $table->unsignedInteger('organization_id');
+        Schema::create('unit_trees', function (Blueprint $table) {
+            $table->unsignedInteger('unit_id');
             $table->unsignedInteger('parent_id');
 
-            $table->primary(['organization_id', 'parent_id']);
-            $table->foreign('organization_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('parent_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
+            $table->primary(['unit_id', 'parent_id']);
+            $table->foreign('unit_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');
         });
 
-        MetableSchema::create('organizations_meta', 'organization_id', 'organizations', 'unsignedInteger');
+        MetableSchema::create('units_meta', 'unit_id', 'units', 'unsignedInteger');
 
-        Schema::create('org_depts', function (Blueprint $table) {
+        Schema::create('unit_departments', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('organization_id');
+            $table->unsignedInteger('unit_id');
             $table->unsignedInteger('dept_id');
             $table->string('description')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
@@ -106,25 +106,25 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('organization_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('dept_id')->references('id')->on('depts')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('parent_id')->references('id')->on('org_depts')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('unit_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('dept_id')->references('id')->on('departements')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('unit_departments')->onUpdate('cascade')->onDelete('set null');
         });
 
-        Schema::create('org_positions', function (Blueprint $table) {
+        Schema::create('unit_positions', function (Blueprint $table) {
             $table->Increments('id');
-            $table->unsignedInteger('org_dept_id');
+            $table->unsignedInteger('unit_dept_id');
             $table->unsignedSmallInteger('position_id');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('org_dept_id')->references('id')->on('org_depts')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('unit_dept_id')->references('id')->on('unit_departments')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('position_id')->references('id')->on('positions')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::create('members', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('organization_id');
+            $table->unsignedInteger('unit_id')->nullable();
             $table->unsignedSmallInteger('type');
             $table->unsignedInteger('user_id');
             $table->string('nbts')->nullable();
@@ -134,7 +134,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('organization_id')->references('id')->on('organizations')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('unit_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
 
@@ -174,7 +174,7 @@ return new class extends Migration
         Schema::create('member_positions', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->unsignedInteger('member_id');
-            $table->unsignedInteger('org_position_id');
+            $table->unsignedInteger('unit_position_id');
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
             $table->text('meta')->nullable();
@@ -182,7 +182,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('org_position_id')->references('id')->on('org_positions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('unit_position_id')->references('id')->on('unit_positions')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -196,14 +196,14 @@ return new class extends Migration
         Schema::dropIfExists('member_positions');
         Schema::dropIfExists('member_levels');
         Schema::dropIfExists('members');
-        Schema::dropIfExists('org_contracts');
-        Schema::dropIfExists('org_positions');
-        Schema::dropIfExists('org_depts');
+        Schema::dropIfExists('unit_positions');
+        Schema::dropIfExists('unit_departments');
         Schema::dropIfExists('org_trees');
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('units');
+        Schema::dropIfExists('contracts');
         Schema::dropIfExists('levels');
         Schema::dropIfExists('position_trees');
         Schema::dropIfExists('positions');
-        Schema::dropIfExists('depts');
+        Schema::dropIfExists('departements');
     }
 };

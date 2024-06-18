@@ -7,21 +7,24 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
-class Organization extends Model
+class Unit extends Model
 {
     use Restorable, Searchable, Metable;
 
-    protected $table = "organizations";
+    /**
+     * Define the table
+     */
+    protected $table = "units";
 
     /**
      * Define the meta table
      */
-    protected $metaTable = 'organizations_meta';
+    protected $metaTable = 'units_meta';
 
     /**
      * Define the meta key name
      */
-    public $metaKeyName = 'organization_id';
+    public $metaKeyName = 'unit_id';
 
     /**
      * Prevent meta from being populated
@@ -61,7 +64,7 @@ class Organization extends Model
      */
     public function parents()
     {
-        return $this->belongsToMany(self::class, 'org_trees', 'organization_id', 'parent_id')->orderBy('level');
+        return $this->belongsToMany(self::class, 'unit_trees', 'unit_id', 'parent_id')->orderBy('level');
     }
 
     /**
@@ -69,6 +72,14 @@ class Organization extends Model
      */
     public function children()
     {
-        return $this->belongsToMany(self::class, 'org_trees', 'parent_id', 'organization_id')->orderBy('level');
+        return $this->belongsToMany(self::class, 'unit_trees', 'parent_id', 'unit_id')->orderBy('level');
+    }
+
+    /**
+     * This has many unit dept.
+     */
+    public function unit_depts()
+    {
+        return $this->hasMany(UnitDepartement::class, 'unit_id');
     }
 }

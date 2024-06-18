@@ -6,14 +6,14 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
-class OrganizationPosition extends Model
+class UnitPosition extends Model
 {
     use Restorable, Searchable;
 
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_positions';
+    protected $table = 'unit_positions';
 
     /**
      * The attributes that are mass assignable.
@@ -42,16 +42,16 @@ class OrganizationPosition extends Model
     /**
      * belongs to departement.
      */
-    public function departement()
+    public function unit_departement()
     {
-        return $this->belongsTo(OrganizationDepartement::class, 'org_dept_id');
+        return $this->belongsTo(UnitDepartement::class, 'unit_dept_id');
     }
 
     /**
      * belongs to organization.
      */
-    public function position()
+    public function positions()
     {
-        return $this->belongsTo(Position::class, 'position_id');
+        return $this->hasMany(Position::class, 'position_id');
     }
 }

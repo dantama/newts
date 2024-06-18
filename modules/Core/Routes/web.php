@@ -5,16 +5,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
 
     // Redirect to dashboard
-    Route::get('/', fn () => redirect()->route('admin::dashboard'))->name('index');
+    Route::get('/', fn () => redirect()->route('core::dashboard'))->name('index');
 
     // Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-    Route::prefix('membership')->namespace('Membership')->name('membership.')->group(function () {
-        // Membership
-        Route::resource('members', 'MemberController');
-        Route::resource('certificates', 'CertificateController');
-    });
 
     // System
     Route::prefix('system')->namespace('System')->name('system.')->group(function () {

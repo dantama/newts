@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Modules\Account\Models\User;
 use Modules\Core\Models\Organization;
+use Modules\Core\Models\Unit;
 
 class MemberSeeder extends Seeder
 {
@@ -36,7 +37,7 @@ class MemberSeeder extends Seeder
             if ($user->save()) {
                 // Change to current password
                 DB::table($user->getTable())->where('id', $user->id)->update(['password' => $value['password']]);
-                // Set meta data for the main organization
+                // Set meta data for the main unit
                 if (!empty($value['meta'])) {
                     foreach ($value['meta'] as $key => $val) {
                         $user->setMeta($key, $val);
@@ -44,12 +45,12 @@ class MemberSeeder extends Seeder
                 }
                 // Handle provinces
                 if (!empty($value['member'])) {
-                    $org = Organization::whereMeta('org_code', '=', $value['member']['pimda'])->first()->id;
+                    $org = Unit::whereMeta('org_code', '=', $value['member']['pimda'])->first()->id;
                     $user->member()->create([
                         ...Arr::except($value['member'], ['regency', 'pimda', 'joined_at']),
                         'type' => 1,
                         'joined_at' => now(),
-                        'organization_id' => $org
+                        'unit_id' => $org
                     ]);
                 }
             }

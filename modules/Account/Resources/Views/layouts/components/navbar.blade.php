@@ -6,8 +6,7 @@
             </button>
         @endif
         <a class="navbar-brand d-flex" href="{{ config('app.url') }}">
-            <img src="{{ asset('img/logo/logo-text.svg') }}" height="24" class="me-2">
-            <div class="d-none d-sm-block"><small class="text-muted">Penilaian Kinerja</small></div>
+            <img src="{{ asset('img/logo/logo.png') }}" height="32" class="me-2">
         </a>
         <ul class="navbar-nav align-items-center ms-auto flex-row">
             <li class="nav-item dropdown">

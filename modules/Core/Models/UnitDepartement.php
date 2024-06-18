@@ -6,14 +6,14 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
-class OrganizationDepartement extends Model
+class UnitDepartement extends Model
 {
     use Restorable, Searchable;
 
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_depts';
+    protected $table = 'unit_departments';
 
     /**
      * The attributes that are mass assignable.
@@ -54,8 +54,13 @@ class OrganizationDepartement extends Model
     /**
      * belongs to organization.
      */
-    public function organization()
+    public function unit()
     {
-        return $this->belongsTo(Organization::class, 'organization_id');
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
+
+    public function unit_positions()
+    {
+        return $this->hasMany(UnitPosition::class, 'unit_dept_id');
     }
 }

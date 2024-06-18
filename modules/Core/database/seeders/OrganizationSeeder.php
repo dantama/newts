@@ -2,10 +2,11 @@
 
 namespace Modules\Core\Database\Seeders;
 
+use Modules\Core\Enums\OrganizationTypeEnum;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Modules\Core\Models\Organization;
+use Modules\Core\Models\Unit;
 
 class OrganizationSeeder extends Seeder
 {
@@ -27,7 +28,7 @@ class OrganizationSeeder extends Seeder
 
         foreach ($data as $value) {
             // Create the main organization
-            $org = new Organization(Arr::except($value, ['meta', 'provinces', 'perwils', 'parent_id']));
+            $org = new Unit(Arr::except($value, ['meta', 'provinces', 'perwils', 'parent_id']));
             if ($org->save()) {
                 // Set meta data for the main organization
                 if (!empty($value['meta'])) {
@@ -61,6 +62,14 @@ class OrganizationSeeder extends Seeder
                         }
                     }
                 }
+            }
+        }
+
+        $units = Unit::all();
+        foreach ($units as $key => $unit) {
+            $depts = OrganizationTypeEnum::tryFrom($unit['type'])->depts();
+            foreach ($depts as $k => $v) {
+                $unit->unit_depts()->create(['dept_id' => $v]);
             }
         }
     }

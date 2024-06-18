@@ -4,7 +4,7 @@
             <div class="col-4">
                 <a class="btn btn-ghost-light text-dark w-100" href="{{ config('app.url') }}">
                     <div class="mt-2" style="height: 46px;">
-                        <img src="{{ asset('img/logo/logo-icon.svg') }}" style="height: 36px;" alt="">
+                        <img src="{{ asset('img/logo/logo-icon.png') }}" style="height: 36px;" alt="">
                     </div>
                     <div class="d-block text-dark">Beranda</div>
                 </a>
@@ -15,11 +15,19 @@
                     <div class="d-block text-dark">Akun</div>
                 </a>
             </div>
+            @if (Gate::allows('administration::access'))
+                <div class="col-4">
+                    <a class="btn btn-ghost-light text-dark w-100" href="{{ route('administration::dashboard') }}">
+                        <i class="mdi mdi-account-multiple mdi-36px"></i>
+                        <div class="d-block text-dark">Administrasi</div>
+                    </a>
+                </div>
+            @endif
             @if (Gate::allows('core::access'))
                 <div class="col-4">
                     <a class="btn btn-ghost-light text-danger w-100" href="{{ route('core::dashboard') }}">
-                        <i class="mdi mdi-account-lock-outline mdi-36px"></i>
-                        <div class="d-block text-danger">Admin</div>
+                        <i class="mdi mdi-cogs mdi-36px"></i>
+                        <div class="d-block text-danger">Pengaturan</div>
                     </a>
                 </div>
             @endif

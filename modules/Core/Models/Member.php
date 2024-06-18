@@ -37,7 +37,7 @@ class Member extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'user_id', 'nbts', 'nbm', 'qr', 'joined_at'
+        'unit_id', 'user_id', 'nbts', 'nbm', 'qr', 'joined_at'
     ];
 
     /**

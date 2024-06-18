@@ -30,7 +30,6 @@ class AccountDatabaseSeeder extends Seeder
 
         $user->member()->create([
             'type' => 1,
-            'organization_id' => 1,
             'joined_at' => Carbon::parse(now()),
         ]);
     }

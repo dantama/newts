@@ -4,6 +4,7 @@ namespace Modules\Administration\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AdminableMiddleware
 {
@@ -16,10 +17,9 @@ class AdminableMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->adminable) {
+        if (Gate::allows('administration::access')) {
             return $next($request);
         }
-
         return abort(403);
     }
 }

@@ -20,8 +20,7 @@ class DepartmentsController extends Controller
     {
         $this->authorize('access', Departement::class);
 
-        $departments = Departement::withCount('positions')
-            ->whenTrashed($request->get('trash'))
+        $departments = Departement::whenTrashed($request->get('trash'))
             ->search($request->get('search'))
             ->paginate($request->get('limit', 10));
 

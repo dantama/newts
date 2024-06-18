@@ -3,7 +3,6 @@
 namespace Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Departement;
 use App\Models\Traits\Metable\Metable;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
@@ -84,5 +83,21 @@ class Position extends Model
     public function scopeVisibility($query, $bool = true)
     {
         return $query->whereIsVisible($bool ? 1 : 0);
+    }
+
+    /**
+     * When department id.
+     */
+    public function scopeWhenDeptId($query, $department)
+    {
+        return $query->when((bool) $department, fn ($subquery) => $subquery->whereDeptId($department));
+    }
+
+    /**
+     * Find by kd.
+     */
+    public function scopeFindByKd($query, $kd)
+    {
+        return $query->where('kd', $kd)->firstOrFail();
     }
 }
