@@ -2,8 +2,8 @@
 
 namespace Modules\Event\Http\Controllers;
 
-use App\Models\Event;
-use App\Models\EventRegistrant;
+use Modules\Event\Models\Event;
+use Modules\Event\Models\EventRegistrant;
 use App\Models\Student;
 use App\Models\Member;
 use Illuminate\Http\Request;
@@ -19,32 +19,32 @@ class RegisterController extends Controller
         $user = auth()->user();
         $managerial = $user->flattenManagerials()->first();
         $state = $request->get('state');
-        $code = array(2,3);
+        $code = array(2, 3);
 
         $students = Student::with(['user', 'levels' => function ($level) {
-                        return $level->orderByDesc('level_id');
-                    }])->whereDistrictId($managerial->id)->get();
+            return $level->orderByDesc('level_id');
+        }])->whereDistrictId($managerial->id)->get();
 
 
-        if(auth()->user()->isManagerProvinces()){
+        if (auth()->user()->isManagerProvinces()) {
             $mgmt = \App\Models\ManagementRegency::whereMgmtProvinceId($managerial->id)->get()->pluck('id')->toArray();
             $members = Member::with(['user', 'levels' => function ($level) {
-                            return $level->orderByDesc('level_id');
-                        }])->whereCodeIn($code)->whereRegencyIn($mgmt)->get();
-        }else if(auth()->user()->isManagerRegencies()) {
+                return $level->orderByDesc('level_id');
+            }])->whereCodeIn($code)->whereRegencyIn($mgmt)->get();
+        } else if (auth()->user()->isManagerRegencies()) {
             $members = Member::with(['user', 'levels' => function ($level) {
-                            return $level->orderByDesc('level_id');
-                        }])->whereCodeIn(2)->inManagerial($managerial)->get();
+                return $level->orderByDesc('level_id');
+            }])->whereCodeIn(2)->inManagerial($managerial)->get();
         }
 
         $registered_users = $event->registrants()
-                                  ->with('user', 'level')
-                                  ->whereIn('user_id', array_merge($students->pluck('user.id')->toArray() ?? [], $members->pluck('user.id')->toArray() ?? []))
-                                  ->get();
+            ->with('user', 'level')
+            ->whereIn('user_id', array_merge($students->pluck('user.id')->toArray() ?? [], $members->pluck('user.id')->toArray() ?? []))
+            ->get();
 
         // return $members;
 
-        return view('event::register.index', compact('user', 'event', 'managerial', 'students', 'members', 'registered_users','state'));
+        return view('event::register.index', compact('user', 'event', 'managerial', 'students', 'members', 'registered_users', 'state'));
     }
 
     /**
@@ -54,10 +54,10 @@ class RegisterController extends Controller
     {
         $refid = time();
 
-        if($request->has('users')){
+        if ($request->has('users')) {
             $data = [];
             foreach ($request->input('users') as $id => $level_id) {
-                if(isset($level_id)) {
+                if (isset($level_id)) {
                     $data[] = [
                         'user_id'   => $id,
                         'level_id'  => $level_id,
@@ -70,12 +70,12 @@ class RegisterController extends Controller
 
             // return redirect()->route('event::register.index', ['event' => $event])
             return redirect()->back()
-                        ->with('success', 'Pendaftaran berhasil, silahkan lanjutkan ke bagian upload bukti pembayaran!');
+                ->with('success', 'Pendaftaran berhasil, silahkan lanjutkan ke bagian upload bukti pembayaran!');
         }
 
         // return redirect()->route('event::register.index', ['event' => $event])
         return redirect()->back()
-                        ->with('danger', 'Terjadi kegagalan, tidak ada data yang disimpan!');
+            ->with('danger', 'Terjadi kegagalan, tidak ada data yang disimpan!');
     }
 
     /**
@@ -94,7 +94,7 @@ class RegisterController extends Controller
         ]);
 
         return redirect()->back()
-                    ->with('success', 'Pembayaran berhasil, segera konfirmasi status pembayaran ke Admin!');
+            ->with('success', 'Pembayaran berhasil, segera konfirmasi status pembayaran ke Admin!');
     }
 
     /**
@@ -109,7 +109,7 @@ class RegisterController extends Controller
         ]);
 
         return redirect()->back()
-                    ->with('success', 'Pendaftaran peserta dengan Ref ID '.$refid.' berhasil diupdate!');
+            ->with('success', 'Pendaftaran peserta dengan Ref ID ' . $refid . ' berhasil diupdate!');
     }
 
     /**
@@ -120,6 +120,6 @@ class RegisterController extends Controller
         $event->registrants()->where('refid', $refid)->delete();
 
         return redirect()->back()
-                    ->with('success', 'Pendaftaran peserta dengan Ref ID '.$refid.' berhasil dihapus!');
+            ->with('success', 'Pendaftaran peserta dengan Ref ID ' . $refid . ' berhasil dihapus!');
     }
 }
