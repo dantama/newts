@@ -154,23 +154,6 @@ return new class extends Migration
             $table->foreign('level_id')->references('id')->on('levels')->onUpdate('cascade')->onDelete('cascade');
         });
 
-        Schema::create('member_contracts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('kd');
-            $table->unsignedInteger('member_id');
-            $table->unsignedTinyInteger('contract_id');
-            $table->timestamp('start_at')->nullable();
-            $table->timestamp('end_at')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-
-            $table->unique('kd');
-            $table->foreign('member_id')->references('id')->on('members')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('contract_id')->references('id')->on('contracts')->onUpdate('cascade')->onDelete('cascade');
-        });
-
-        MetableSchema::create('member_contract_meta', 'member_contract_id', 'member_contracts', 'unsignedInteger');
-
         Schema::create('member_positions', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->unsignedInteger('member_id');
@@ -182,6 +165,39 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('unit_position_id')->references('id')->on('unit_positions')->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        Schema::create('managers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('member_id');
+            $table->unsignedInteger('unit_dept_id');
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
+            $table->text('meta')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('member_id')->references('id')->on('members')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('unit_dept_id')->references('id')->on('unit_departments')->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        MetableSchema::create('managers_meta', 'manager_id', 'managers', 'unsignedInteger');
+
+        Schema::create('manager_contracts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('kd');
+            $table->unsignedInteger('manager_id');
+            $table->unsignedTinyInteger('contract_id');
+            $table->unsignedInteger('unit_position_id');
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->unique('kd');
+            $table->foreign('manager_id')->references('id')->on('managers')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('contract_id')->references('id')->on('contracts')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('unit_position_id')->references('id')->on('unit_positions')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -11,7 +11,25 @@ class Manager extends Model
 {
     use Restorable, Searchable;
 
-    protected $table = "org_managers";
+    /**
+     * Define the table
+     */
+    protected $table = "managers";
+
+    /**
+     * Define the meta table
+     */
+    protected $metaTable = 'managers_meta';
+
+    /**
+     * Define the meta key name
+     */
+    public $metaKeyName = 'manager_id';
+
+    /**
+     * Prevent meta from being populated
+     */
+    public $hideMeta = true;
 
     /**
      * The attributes that are mass assignable.
@@ -48,9 +66,17 @@ class Manager extends Model
     /**
      * This belongsTo User.
      */
-    public function user()
+    public function member()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Member::class, 'member_id');
+    }
+
+    /**
+     * This belongsTo User.
+     */
+    public function unit_departement()
+    {
+        return $this->belongsTo(UnitDepartement::class, 'unit_dept_id');
     }
 
     /**

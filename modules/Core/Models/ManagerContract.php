@@ -6,20 +6,20 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
-class MemberContract extends Model
+class ManagerContract extends Model
 {
     use Restorable, Searchable;
 
     /**
      * The table associated with the model.
      */
-    protected $table = 'member_contracts';
+    protected $table = 'manager_contracts';
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'member_id', 'contract_id', 'start_at', 'end_at'
+        'manager_id', 'contract_id', 'start_at', 'end_at'
     ];
 
     /**
@@ -51,9 +51,9 @@ class MemberContract extends Model
     /**
      * This belongsTo member.
      */
-    public function member()
+    public function manager()
     {
-        return $this->belongsTo(Member::class, 'member_id')->withDefault();
+        return $this->belongsTo(Manager::class, 'manager_id')->withDefault();
     }
 
 

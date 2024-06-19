@@ -53,9 +53,9 @@ class AppDatabaseSeeder extends Seeder
                 'UnitPosition' => ['read', 'write', 'delete'],
                 'Member' => ['read', 'write', 'delete'],
                 'MemberPosition' => ['read', 'write', 'delete'],
-                'MemberContract' => ['read', 'write', 'delete'],
                 'MemberLevel' => ['read', 'write', 'delete'],
                 'Manager' => ['read', 'write', 'delete'],
+                'ManagerContract' => ['read', 'write', 'delete'],
             ],
             'blog' => [
                 'BlogPost' => ['read', 'write', 'delete'],
