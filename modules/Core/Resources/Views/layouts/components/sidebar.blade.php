@@ -12,6 +12,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('core::dashboard') }}"> <i class="mdi mdi-apps"></i> Dasbor </a>
                 </li>
+                <li class="divider">Administrasi pusat</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('core::administration.units.index') }}"> <i class="mdi mdi-apps"></i> Organisasi </a>
+                </li>
                 <li class="divider">Sistem</li>
                 @can('access', \Modules\Core\Models\Departement::class)
                     <li class="nav-item">

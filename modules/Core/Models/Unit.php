@@ -6,6 +6,7 @@ use App\Models\Traits\Metable\Metable;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Core\Enums\OrganizationTypeEnum;
 
 class Unit extends Model
 {
@@ -53,7 +54,16 @@ class Unit extends Model
     /**
      * The attributes that should be cast to native types.
      */
-    protected $casts = [];
+    protected $casts = [
+        'unit' => OrganizationTypeEnum::class
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     */
+    protected $searchable = [
+        'name', 'parents.name', 'children.name'
+    ];
 
     /**
      * This has many provinces.
@@ -64,7 +74,7 @@ class Unit extends Model
      */
     public function parents()
     {
-        return $this->belongsToMany(self::class, 'unit_trees', 'unit_id', 'parent_id')->orderBy('level');
+        return $this->belongsToMany(self::class, 'unit_trees', 'unit_id', 'parent_id')->orderBy('type');
     }
 
     /**
@@ -72,7 +82,7 @@ class Unit extends Model
      */
     public function children()
     {
-        return $this->belongsToMany(self::class, 'unit_trees', 'parent_id', 'unit_id')->orderBy('level');
+        return $this->belongsToMany(self::class, 'unit_trees', 'parent_id', 'unit_id')->orderByMeta('org_code');
     }
 
     /**

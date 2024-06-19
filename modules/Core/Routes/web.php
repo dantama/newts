@@ -10,6 +10,14 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+    // Administration
+    Route::prefix('administration')->namespace('Administration')->name('administration.')->group(function () {
+        // Units
+        Route::resource('units', 'UnitController');
+        // Unit departement
+        Route::resource('units-departements', 'UnitDepartementController');
+    });
+
     // System
     Route::prefix('system')->namespace('System')->name('system.')->group(function () {
         // Departments
