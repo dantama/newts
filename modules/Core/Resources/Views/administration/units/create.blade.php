@@ -74,6 +74,45 @@
                                 @enderror
                             </div>
                         </div>
+                        <hr class="divider">
+                        <div class="row mb-3">
+                            <label class="col-lg-4 col-xl-3 col-form-label">Provinsi</label>
+                            <div class="col-xl-8 col-xxl-6">
+                                <select id="type" class="form-select @error('org_prov_id') is-invalid @enderror" name="org_prov_id">
+                                    <option value="">-- Pilih --</option>
+                                    @forelse($provinces as $key => $province)
+                                        <option value="{{ $province->id }}" data-regencies="{{ $province->regencies()->pluck('name', 'id') }}">{{ $province->name }}</option>
+                                    @empty
+                                        <option value="">Tidak ada data provinsi</option>
+                                    @endforelse
+                                </select>
+                                @error('org_prov_id')
+                                    <small class="text-danger d-block"> {{ $message }} </small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-lg-4 col-xl-3 col-form-label">Kabupaten</label>
+                            <div class="col-xl-8 col-xxl-8">
+                                <select id="type" class="form-select @error('org_regency_id') is-invalid @enderror" name="org_regency_id" onchange="renderDistrictOptions(event)">
+                                    <option value="">-- Pilih --</option>
+                                </select>
+                                @error('org_regency_id')
+                                    <small class="text-danger d-block"> {{ $message }} </small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-lg-4 col-xl-3 col-form-label">Kecamatan</label>
+                            <div class="col-xl-8 col-xxl-8">
+                                <select id="type" class="form-select @error('org_distric_id') is-invalid @enderror" name="org_distric_id">
+                                    <option value="">-- Pilih --</option>
+                                </select>
+                                @error('org_distric_id')
+                                    <small class="text-danger d-block"> {{ $message }} </small>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="required row mb-3">
                             <label class="col-lg-4 col-xl-3 col-form-label">Visibilitas</label>
                             <div class="col-lg-8">
@@ -125,8 +164,44 @@
     </div>
 @endsection
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('vendor/tom-select/css/tom-select.bootstrap5.min.css') }}">
+@endpush
+
 @push('scripts')
     <script>
+        const renderDistrictOptions = async (e) => {
+            let regencyId = e.currentTarget.value;
+            let url = @json(route('api::references.search-districs'));
+
+            const fetchDistricts = async (regencyId) => {
+                const response = await fetch(`${url}?q=${encodeURIComponent(regencyId)}`);
+                const data = await response.json();
+                return data.data;
+            };
+
+            const districts = await fetchDistricts(regencyId);
+            let opt = '';
+            for (i in districts) {
+                opt += '<option value="' + i + '" ' + (('{{ old('org_distric_id', -1) }}' == i) ? ' selected' : '') + '>' + districts[i] + '</option>';
+            }
+            console.log(opt)
+            document.querySelector('[name="org_distric_id"]').innerHTML = opt.length ? '<option value>-- Pilih --</option>' + opt : '<option value>-- Pilih --</option>'
+        };
+
+        const listRegencyId = () => {
+            [].slice.call(document.querySelectorAll('[name="org_prov_id"] option:checked')).map((select) => {
+                let opt = '';
+                if (select.dataset.regencies) {
+                    let regencies = JSON.parse(select.dataset.regencies);
+                    for (i in regencies) {
+                        opt += '<option value="' + i + '" ' + (('{{ old('org_prov_id', -1) }}' == i) ? ' selected' : '') + '>' + regencies[i] + '</option>';
+                    }
+                }
+                document.querySelector('[name="org_regency_id"]').innerHTML = opt.length ? '<option value>-- Pilih --</option>' + opt : '<option value>-- Pilih --</option>'
+            });
+        }
+
         const toggleOrg = (e) => {
             let c = '';
             if (e.currentTarget.dataset.units) {
@@ -142,6 +217,10 @@
             [].slice.call(document.querySelectorAll('[name="type"]')).map((e) => {
                 e.addEventListener('click', toggleOrg);
             });
+            [].slice.call(document.querySelectorAll('[name="org_prov_id"]')).map((el) => {
+                el.addEventListener('change', listRegencyId);
+            });
+            listRegencyId();
         });
     </script>
 @endpush

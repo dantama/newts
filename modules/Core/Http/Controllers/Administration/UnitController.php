@@ -7,6 +7,7 @@ use Modules\Account\Models\User;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
+use Modules\Reference\Models\Province;
 
 class UnitController extends Controller
 {
@@ -34,8 +35,9 @@ class UnitController extends Controller
     {
         $this->authorize('store', Unit::class);
         $types = collect(OrganizationTypeEnum::cases());
+        $provinces = Province::all();
 
-        return view('core::administration.units.create', compact('types'));
+        return view('core::administration.units.create', compact('types', 'provinces'));
     }
 
     /**

@@ -3,4 +3,4 @@
 use Illuminate\Support\Facades\Route;
 
 // Search country states
-Route::get('/evaluator/parents', 'EvaluatorController@searchParent')->name('evaluator.parents');
+Route::get('/search-districs', 'StatesController@searchDistricByRegency')->name('search-districs');

@@ -3,6 +3,9 @@
 namespace Modules\Core\Enums;
 
 use Modules\Core\Models\Unit;
+use Modules\Reference\Models\Province;
+use Modules\Reference\Models\ProvinceRegency;
+use Modules\Reference\Models\ProvinceRegencyDistrict;
 
 enum OrganizationTypeEnum: int
 {
@@ -41,7 +44,7 @@ enum OrganizationTypeEnum: int
     }
 
     /**
-     * Get the label accessor with label() object
+     * Get the unit accessor with units() object
      */
     public function units()
     {
@@ -51,6 +54,20 @@ enum OrganizationTypeEnum: int
             self::PERWIL => Unit::where('type', self::CENTER->value)->get(),
             self::AREA   => Unit::where('type', self::REGION->value)->get(),
             self::BRANCH => Unit::where('type', self::AREA->value)->get()
+        };
+    }
+
+    /**
+     * Get the label accessor with label() object
+     */
+    public function states()
+    {
+        return match ($this) {
+            self::CENTER => '',
+            self::REGION => Province::all(),
+            self::PERWIL => '',
+            self::AREA   => ProvinceRegency::all(),
+            self::BRANCH => ProvinceRegencyDistrict::all()
         };
     }
 }
