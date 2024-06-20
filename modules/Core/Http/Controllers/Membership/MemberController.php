@@ -1,31 +1,30 @@
 <?php
 
-namespace Modules\Core\Http\Controllers\Administration;
+namespace Modules\Core\Http\Controllers\Membership;
 
 use Illuminate\Http\Request;
-use Modules\Account\Models\User;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
+use Modules\Core\Models\Member;
 use Modules\Reference\Models\Province;
 
-class UnitController extends Controller
+class MemberController extends Controller
 {
     /**
      * display all resource page.
      */
     public function index(Request $request)
     {
-        $central = Unit::where('type', OrganizationTypeEnum::CENTER->value)->first();
-        $regions = Unit::with('children.meta', 'meta')
+        $members = Member::with('user', 'unit', 'level', 'meta')
             ->search($request->get('search'))
-            ->whereIn('type', [OrganizationTypeEnum::REGION->value, OrganizationTypeEnum::PERWIL->value])
+            ->whenUnit($request->get('unit'))
             ->whenTrashed($request->get('trash'))
             ->paginate($request->get('limit', 10));
 
-        $region_count = Unit::whereIn('type', [OrganizationTypeEnum::REGION->value, OrganizationTypeEnum::PERWIL->value])->count();
+        $member_count = Member::count();
 
-        return view('core::administration.units.index', compact('central', 'regions', 'region_count'));
+        return view('core::membership.members.index', compact('members', 'member_count'));
     }
 
     /**
@@ -37,7 +36,7 @@ class UnitController extends Controller
         $types = collect(OrganizationTypeEnum::cases());
         $provinces = Province::all();
 
-        return view('core::administration.units.create', compact('types', 'provinces'));
+        return view('core::membership.members.create', compact('types', 'provinces'));
     }
 
     /**
@@ -57,6 +56,6 @@ class UnitController extends Controller
         $unit->load('parents', 'meta');
         $types = collect(OrganizationTypeEnum::cases());
 
-        return view('core::administration.units.show', compact('types', 'unit'));
+        return view('core::membership.members.show', compact('types', 'unit'));
     }
 }

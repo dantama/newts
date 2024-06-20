@@ -113,12 +113,12 @@ return new class extends Migration
 
         Schema::create('unit_positions', function (Blueprint $table) {
             $table->Increments('id');
-            $table->unsignedInteger('unit_dept_id');
+            $table->unsignedInteger('unit_id');
             $table->unsignedSmallInteger('position_id');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('unit_dept_id')->references('id')->on('unit_departments')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('unit_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('position_id')->references('id')->on('positions')->onUpdate('cascade')->onDelete('cascade');
         });
 

@@ -3,13 +3,13 @@
 namespace Modules\Core\Http\Controllers\Administration;
 
 use Illuminate\Http\Request;
+use Modules\Account\Models\User;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
-use Modules\Core\Models\Departement;
-use Modules\Core\Models\UnitDepartement;
+use Modules\Reference\Models\Province;
 
-class UnitDepartementController extends Controller
+class UnitPositionController extends Controller
 {
     /**
      * display all resource page.
@@ -17,7 +17,7 @@ class UnitDepartementController extends Controller
     public function index(Request $request)
     {
         $types = collect(OrganizationTypeEnum::cases());
-        $unitDepts = Unit::with('children.meta', 'meta', 'unit_departements.departement')
+        $unitPoss = Unit::with('children.meta', 'meta', 'unit_positions.position')
             ->search($request->get('search'))
             ->whenType($request->get('type'))
             ->whenTrashed($request->get('trash'))
@@ -25,7 +25,7 @@ class UnitDepartementController extends Controller
 
         $unit_count = Unit::count();
 
-        return view('core::administration.unit-departement.index', compact('unitDepts', 'unit_count'));
+        return view('core::administration.unit-positions.index', compact('unitPoss', 'unit_count'));
     }
 
     /**
@@ -38,7 +38,7 @@ class UnitDepartementController extends Controller
         $unit = Unit::find($request->input('unit'));
         $parents = UnitDepartement::with('unit', 'departement')->where('unit_id', $request->input('unit'))->get();
 
-        return view('core::administration.unit-departement.create', compact('depts', 'unit', 'parents'));
+        return view('core::administration.unit-positions.create', compact('depts', 'unit', 'parents'));
     }
 
     /**
@@ -59,6 +59,6 @@ class UnitDepartementController extends Controller
         $unit = Unit::find($request->input('unit'));
         $parents = UnitDepartement::with('unit', 'departement')->where('unit_id', $request->input('unit'))->get();
 
-        return view('core::administration.unit-departement.show', compact('depts', 'unit', 'unit_departement', 'parents'));
+        return view('core::administration.unit-positions.show', compact('depts', 'unit', 'unit_departement', 'parents'));
     }
 }

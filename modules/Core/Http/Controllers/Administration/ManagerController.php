@@ -7,25 +7,24 @@ use Modules\Account\Models\User;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
+use Modules\Core\Models\Manager;
 use Modules\Reference\Models\Province;
 
-class UnitController extends Controller
+class ManagerController extends Controller
 {
     /**
-     * display all resource page.
+     * Show page.
      */
     public function index(Request $request)
     {
-        $central = Unit::where('type', OrganizationTypeEnum::CENTER->value)->first();
-        $regions = Unit::with('children.meta', 'meta')
+        $managers = Manager::with('member', 'unit_departement.departement', 'contract', 'children', 'meta')
             ->search($request->get('search'))
-            ->whereIn('type', [OrganizationTypeEnum::REGION->value, OrganizationTypeEnum::PERWIL->value])
             ->whenTrashed($request->get('trash'))
             ->paginate($request->get('limit', 10));
 
-        $region_count = Unit::whereIn('type', [OrganizationTypeEnum::REGION->value, OrganizationTypeEnum::PERWIL->value])->count();
+        $manager_count = Manager::count();
 
-        return view('core::administration.units.index', compact('central', 'regions', 'region_count'));
+        return view('core::administration.managers.index', compact('managers', 'manager_count'));
     }
 
     /**

@@ -72,7 +72,7 @@ class Manager extends Model
     }
 
     /**
-     * This belongsTo User.
+     * This belongsTo unit departement.
      */
     public function unit_departement()
     {
@@ -80,16 +80,19 @@ class Manager extends Model
     }
 
     /**
-     * This belongsTo position.
+     * This has one cvontract.
      */
-    public function position()
+    public function contract()
     {
-        return $this->belongsTo(Position::class, 'position_id');
+        return $this->hasOne(contract::class, 'manager_id')->active();
     }
 
-    public function managerable()
+    /**
+     * This has many contract.
+     */
+    public function contracts()
     {
-        return $this->morphTo();
+        return $this->hasMany(contract::class, 'manager_id');
     }
 
     /**

@@ -61,6 +61,13 @@ class Member extends Model
      */
     protected $appends = [];
 
+    /**
+     * search by column or relation.
+     */
+    protected $searchable = [
+        'user.name', 'level.level.name', 'nbts', 'nbm', 'user.email_address', 'unit.name'
+    ];
+
 
     protected static function booted()
     {
@@ -73,6 +80,14 @@ class Member extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id')->withDefault();
+    }
+
+    /**
+     * This belongsTo unit.
+     */
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id')->withDefault();
     }
 
     /**
@@ -94,18 +109,24 @@ class Member extends Model
     /**
      * Scope where code in.
      */
-    public function scopeWhereCodeIn($query, $value)
+    public function scopeWhenUnit($query, $unit)
     {
-        return $query->whereHas('levels.detail', function ($code) use ($value) {
-            return $code->whereIn('code', (array) $value);
-        });
+        return $query->when($unit, fn ($m) => $m->whereUnit($unit));
+    }
+
+    /**
+     * Scope where code in.
+     */
+    public function scopeWhenLevelIn($query, array $level)
+    {
+        return $query->when($level, fn ($m) => $m->whereHas('level', fn ($l) => $l->whereIn('level_id', $level)));
     }
 
     /**
      * Scope where regency in.
      */
-    public function scopeWhereRegencyIn($query, $value)
+    public function scopeWhenRegencyIn($query, array $regency)
     {
-        return $query->whereIn('regency_id', (array) $value);
+        return $query->when($regency, fn ($m) => $m->whereHas('unit', fn ($u) => $u->whereMetaIn('org_regency_id', $regency)));
     }
 }

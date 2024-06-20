@@ -1,6 +1,6 @@
 @extends('core::layouts.default')
 
-@section('title', 'Unit ')
+@section('title', 'Unit | ')
 @section('navtitle', 'Unit')
 
 @section('content')

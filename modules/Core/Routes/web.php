@@ -15,7 +15,19 @@ Route::middleware('auth')->group(function () {
         // Units
         Route::resource('units', 'UnitController');
         // Unit departement
-        Route::resource('units-departements', 'UnitDepartementController');
+        Route::resource('unit-departements', 'UnitDepartementController')->parameters(['unit_departements' => 'unit_departement']);
+
+        // Unit position
+        Route::resource('unit-positions', 'UnitPositionController')->parameters(['unit_positions' => 'unit_position']);
+
+        // Managers
+        Route::resource('managers', 'ManagerController');
+    });
+
+    // Membership
+    Route::prefix('membership')->namespace('Membership')->name('membership.')->group(function () {
+        // Member
+        Route::resource('members', 'MemberController');
     });
 
     // System

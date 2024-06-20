@@ -21,7 +21,7 @@ class UnitPosition extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'org_dept_id',
+        'unit_id',
         'position_id',
     ];
 
@@ -42,16 +42,16 @@ class UnitPosition extends Model
     /**
      * belongs to departement.
      */
-    public function unit_departement()
+    public function unit()
     {
-        return $this->belongsTo(UnitDepartement::class, 'unit_dept_id');
+        return $this->belongsTo(Unit::class, 'unit_id');
     }
 
     /**
      * belongs to organization.
      */
-    public function positions()
+    public function position()
     {
-        return $this->hasMany(Position::class, 'position_id');
+        return $this->belongsTo(Position::class, 'position_id');
     }
 }

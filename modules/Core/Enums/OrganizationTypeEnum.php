@@ -30,6 +30,34 @@ enum OrganizationTypeEnum: int
     }
 
     /**
+     * Get the prefix accessor with prefix() object
+     */
+    public function prefix(): string
+    {
+        return match ($this) {
+            self::CENTER => 'Pimpinan pusat',
+            self::REGION => 'Pimpinan wilayah',
+            self::PERWIL => 'Perwakilan wilayah',
+            self::AREA   => 'Pimpinan Daerah',
+            self::BRANCH => 'Pimpinan Cabang'
+        };
+    }
+
+    /**
+     * Get the prefix accessor with prefix() object
+     */
+    public function color(): string
+    {
+        return match ($this) {
+            self::CENTER => 'bg-danger text-light',
+            self::REGION => 'bg-primary text-light',
+            self::PERWIL => 'bg-info text-light',
+            self::AREA   => 'bg-success text-light',
+            self::BRANCH => 'bg-secondary text-light'
+        };
+    }
+
+    /**
      * Get the label accessor with label() object
      */
     public function depts(): array

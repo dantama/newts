@@ -13,8 +13,30 @@
                     <a class="nav-link" href="{{ route('core::dashboard') }}"> <i class="mdi mdi-apps"></i> Dasbor </a>
                 </li>
                 <li class="divider">Administrasi pusat</li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="javascript:;"> <i class="mdi mdi-bank"></i> Organisasi</a>
+                    <ul class="submenu collapse">
+                        <li>
+                            <a class="nav-link" href="{{ route('core::administration.units.index') }}"> Unit </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('core::administration.unit-departements.index') }}"> Unit departemen </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('core::administration.unit-positions.index') }}"> Unit jabatan </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('core::administration.units.index') }}"> <i class="mdi mdi-apps"></i> Organisasi </a>
+                    <a class="nav-link" href="{{ route('core::administration.managers.index') }}"> <i class="mdi mdi-account-circle-outline"></i> Pengurus </a>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="javascript:;"> <i class="mdi mdi-account-group-outline"></i> Keanggotaan</a>
+                    <ul class="submenu collapse">
+                        <li>
+                            <a class="nav-link" href="{{ route('core::membership.members.index') }}"> Anggota </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="divider">Sistem</li>
                 @can('access', \Modules\Core\Models\Departement::class)

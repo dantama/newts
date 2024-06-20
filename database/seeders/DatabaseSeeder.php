@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
                 \Modules\Core\Database\Seeders\ContractSeeder::class,
                 \Modules\Core\Database\Seeders\PositionSeeder::class,
                 \Modules\Core\Database\Seeders\OrganizationSeeder::class,
+                \Modules\Core\Database\Seeders\OrganizationPositionSeeder::class,
                 \Modules\Reference\Database\Seeders\ReferenceDatabaseSeeder::class,
                 \Modules\Core\Database\Seeders\MemberSeeder::class,
             ]);

@@ -13,7 +13,7 @@ class MemberLevel extends Model
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_member_levels';
+    protected $table = 'member_levels';
 
     /**
      * The attributes that are mass assignable.

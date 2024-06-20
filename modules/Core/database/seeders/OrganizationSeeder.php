@@ -67,9 +67,9 @@ class OrganizationSeeder extends Seeder
 
         $units = Unit::all();
         foreach ($units as $key => $unit) {
-            $depts = OrganizationTypeEnum::tryFrom($unit['type'])->depts();
+            $depts = OrganizationTypeEnum::tryFrom($unit['type']->value)->depts();
             foreach ($depts as $k => $v) {
-                $unit->unit_depts()->create(['dept_id' => $v]);
+                $unit->unit_departements()->create(['dept_id' => $v]);
             }
         }
     }

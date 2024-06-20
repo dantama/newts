@@ -55,7 +55,7 @@ class Unit extends Model
      * The attributes that should be cast to native types.
      */
     protected $casts = [
-        'unit' => OrganizationTypeEnum::class
+        'type' => OrganizationTypeEnum::class
     ];
 
     /**
@@ -88,8 +88,24 @@ class Unit extends Model
     /**
      * This has many unit dept.
      */
-    public function unit_depts()
+    public function unit_departements()
     {
         return $this->hasMany(UnitDepartement::class, 'unit_id');
+    }
+
+    /**
+     * This has many unit dept.
+     */
+    public function unit_positions()
+    {
+        return $this->hasMany(UnitPosition::class, 'unit_id');
+    }
+
+    /**
+     * This has many unit dept.
+     */
+    public function scopeWhenType($query, $type)
+    {
+        return $query->when($type, fn ($t) => $t->whereType($type));
     }
 }
