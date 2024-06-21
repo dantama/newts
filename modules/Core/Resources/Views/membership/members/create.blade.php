@@ -187,7 +187,6 @@
             for (i in districts) {
                 opt += '<option value="' + i + '" ' + (('{{ old('org_distric_id', -1) }}' == i) ? ' selected' : '') + '>' + districts[i] + '</option>';
             }
-            console.log(opt)
             document.querySelector('[name="org_distric_id"]').innerHTML = opt.length ? '<option value>-- Pilih --</option>' + opt : '<option value>-- Pilih --</option>'
         };
 

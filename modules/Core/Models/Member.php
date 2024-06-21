@@ -8,6 +8,7 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Modules\Account\Models\User;
 use Modules\Core\Enums\MembershipTypeEnum;
+use Modules\Core\Enums\OrganizationTypeEnum;
 
 class Member extends Model
 {
@@ -109,9 +110,17 @@ class Member extends Model
     /**
      * Scope where code in.
      */
-    public function scopeWhenUnit($query, $unit)
+    public function scopeWhenUnits($query, $units)
     {
-        return $query->when($unit, fn ($m) => $m->whereUnit($unit));
+        return $query->when($units, fn ($m) => $m->whereIn('unit_id', $units));
+    }
+
+    /**
+     * Scope where code in.
+     */
+    public function scopeWhenType($query, $type)
+    {
+        return $query->when($type, fn ($m) => $m->whereType($type));
     }
 
     /**

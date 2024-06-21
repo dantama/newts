@@ -7,11 +7,15 @@ use Modules\Account\Models\User;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
+use Modules\Core\Models\Contract;
 use Modules\Core\Models\Manager;
+use Modules\Core\Models\Member;
+use Modules\Core\Repositories\ManagerRepository;
 use Modules\Reference\Models\Province;
 
 class ManagerController extends Controller
 {
+    use ManagerRepository;
     /**
      * Show page.
      */
@@ -33,10 +37,10 @@ class ManagerController extends Controller
     public function create()
     {
         $this->authorize('store', Unit::class);
-        $types = collect(OrganizationTypeEnum::cases());
-        $provinces = Province::all();
+        $units = Unit::with('unit_departements.departement')->get();
+        $contracts = Contract::get();
 
-        return view('core::administration.units.create', compact('types', 'provinces'));
+        return view('core::administration.managers.create', compact('units', 'contracts'));
     }
 
     /**

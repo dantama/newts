@@ -3,28 +3,49 @@
 namespace Modules\Core\Http\Controllers\Membership;
 
 use Illuminate\Http\Request;
+use Modules\Core\Enums\MembershipTypeEnum;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
 use Modules\Core\Models\Member;
 use Modules\Reference\Models\Province;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Modules\Core\Repositories\UnitRepository;
 
 class MemberController extends Controller
 {
+    use UnitRepository;
     /**
      * display all resource page.
      */
     public function index(Request $request)
     {
-        $members = Member::with('user', 'unit', 'level', 'meta')
+        $memberships = collect(MembershipTypeEnum::cases());
+
+        $units = Unit::with('parents.parents', 'meta')->get();
+
+        $param = $request->get('unit') ? $this->transformUnit(Unit::find($request->get('unit'))) : '';
+
+        $data = Member::with('user', 'unit', 'level', 'meta')
             ->search($request->get('search'))
-            ->whenUnit($request->get('unit'))
+            ->whenUnits($param)
+            ->whenType($request->get('membership'))
             ->whenTrashed($request->get('trash'))
-            ->paginate($request->get('limit', 10));
+            ->get();
 
-        $member_count = Member::count();
+        $totalGroup = count($data);
+        $perPage    = $request->get('limit', 10);
+        $page       = Paginator::resolveCurrentPage('page');
 
-        return view('core::membership.members.index', compact('members', 'member_count'));
+        $members = new LengthAwarePaginator($data->forPage($page, $perPage), $totalGroup, $perPage, $page, [
+            'path' => Paginator::resolveCurrentPath(),
+            'pageName' => 'page',
+        ]);
+
+        $member_count = $totalGroup;
+
+        return view('core::membership.members.index', compact('members', 'member_count', 'memberships', 'units'));
     }
 
     /**

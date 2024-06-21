@@ -153,6 +153,47 @@
                 <div><i class="mdi mdi-file-tree-outline mdi-48px text-light"></i></div>
             </div>
             <div class="card border-0">
+                <div class="card-body border-bottom">
+                    <div class="fw-bold"><i class="mdi mdi-filter"></i> Filter</div>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('core::membership.members.index') }}" method="get">
+                        <div class="mb-3">
+                            <label for="org_prov_id" class="form-label">Unit</label>
+                            <select class="form-select form-select" name="unit" id="unit_id">
+                                <option value=""></option>
+                                @foreach ($units as $key => $unit)
+                                    <option value="{{ $unit->id }}" @selected(request('unit') == $unit->id)>{{ $unit->type->alias() . ' ' . $unit->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="org_prov_id" class="form-label">Kategori</label>
+                            <select class="form-select form-select" name="membership" id="membership">
+                                <option value=""></option>
+                                @foreach ($memberships as $key => $membership)
+                                    <option value="{{ $membership->value }}" data-levels="{{ json_encode($membership->levels()) }}" @selected(request('membership') == $membership->value)>{{ $membership->label() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="level" class="form-label">Tingkatan</label>
+                            <select class="form-select form-select" name="levels[]" id="level_id" multiple>
+                                <option selected></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pencarian</label>
+                            <input class="form-control" name="search" placeholder="Cari nama atau NBTS ..." value="{{ request('search') }}" />
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-soft-danger" type="submit"><i class="mdi mdi-filter-outline"></i> Terapkan</button>
+                            <a class="btn btn-light" href="{{ route('core::membership.members.index') }}"><i class="mdi mdi-refresh"></i> Reset</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card border-0">
                 <div class="card-body">Menu lainnya</div>
                 <div class="list-group list-group-flush border-top border-light">
                     @can('store', Modules\Core\Models\Unit::class)
@@ -164,3 +205,41 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('vendor/tom-select/css/tom-select.bootstrap5.min.css') }}">
+@endpush
+
+@push('scripts')
+    <script>
+        const renderTomSelect = (selector) => {
+            new TomSelect(selector, {
+                valueField: 'id',
+                labelField: 'text',
+                searchField: 'text',
+            });
+        }
+
+        const listMembership = () => {
+            [].slice.call(document.querySelectorAll('[name="membership"] option:checked')).map((select) => {
+                let opt = '';
+                let requestlevel = @JSON(request('levels')) ?? [];
+                if (select.dataset.levels) {
+                    let levels = JSON.parse(select.dataset.levels);
+                    for (i in levels) {
+                        opt += '<option value="' + i + '" ' + (requestlevel.includes(i) ? ' selected' : '') + '>' + levels[i] + '</option>';
+                    }
+                }
+                document.querySelector('#level_id').innerHTML = opt.length ? '<option value>-- Pilih --</option>' + opt : '<option value></option>'
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            [].slice.call(document.querySelectorAll('[name="membership"]')).map((e) => {
+                e.addEventListener('click', listMembership);
+            });
+            listMembership();
+            renderTomSelect('#unit_id');
+        });
+    </script>
+@endpush

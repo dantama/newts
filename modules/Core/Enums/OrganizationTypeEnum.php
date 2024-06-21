@@ -44,6 +44,20 @@ enum OrganizationTypeEnum: int
     }
 
     /**
+     * Get the alias accessor with alias() object
+     */
+    public function alias(): string
+    {
+        return match ($this) {
+            self::CENTER => '',
+            self::REGION => 'PIMWIL',
+            self::PERWIL => 'PERWIL',
+            self::AREA   => 'PIMDA',
+            self::BRANCH => 'PIMCAB'
+        };
+    }
+
+    /**
      * Get the prefix accessor with prefix() object
      */
     public function color(): string
