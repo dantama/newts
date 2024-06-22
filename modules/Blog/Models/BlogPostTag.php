@@ -10,7 +10,7 @@ class BlogPostTag extends Model
     /**
      * The database table used by the model.
      */
-    protected $table;
+    protected $table = 'blog_post_tags';
 
     /**
      * The primary key for the model.
@@ -35,15 +35,6 @@ class BlogPostTag extends Model
      * Indicates if the model should be timestamped.
      */
     public $timestamps = false;
-
-    /**
-     * Creates a new instance of the model.
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = 'blog_post_tags';
-    }
 
     /**
      * This belongsTo post.

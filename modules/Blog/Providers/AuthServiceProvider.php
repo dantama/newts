@@ -18,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
         Models\BlogCategory::class => Policies\BlogCategoryPolicy::class,
         Models\BlogPostComment::class => Policies\BlogPostCommentPolicy::class,
         Models\BlogPostTag::class => Policies\BlogPostTagPolicy::class,
+        Models\Subscriber::class => Policies\SubscriberPolicy::class,
     ];
 
     /**

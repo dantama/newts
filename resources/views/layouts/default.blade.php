@@ -23,18 +23,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
     <link href="{{ asset(mix('css/styles.css')) }}" rel="stylesheet">
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset(mix('vendor/@mdi/css/materialdesignicons.min.css')) }}" rel="stylesheet">
     <link rel="manifest" href="{{ asset('/manifest.json') }}" />
     <!-- ios support -->
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-72.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-96.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-128.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-144.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-152.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-192.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-384.png') }}" />
-    <link rel="apple-touch-icon" href="{{ asset('img/logo/logo-icon-bw-512.png') }}" />
     <meta name="apple-mobile-web-app-status-bar" content="#fc0f03" />
     <meta name="theme-color" content="#fc0f03" />
     <title>@yield('title') @yield('titleTemplate', config('app.settings.app_name', config('app.name', 'Laravel')))</title>

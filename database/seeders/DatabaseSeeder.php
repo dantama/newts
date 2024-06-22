@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 AppDatabaseSeeder::class,
                 \Modules\Account\Database\Seeders\AccountDatabaseSeeder::class,
+                \Modules\Blog\Database\Seeders\BlogCategorySeeder::class,
                 \Modules\Core\Database\Seeders\DepartementSeeder::class,
                 \Modules\Core\Database\Seeders\LevelSeeder::class,
                 \Modules\Core\Database\Seeders\ContractSeeder::class,

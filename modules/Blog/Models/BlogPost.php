@@ -2,6 +2,7 @@
 
 namespace Modules\Blog\Models;
 
+use App\Models\Traits\Metable\Metable;
 use App\Models\Traits\Restorable\Restorable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
@@ -9,12 +10,27 @@ use Modules\Account\Models\User;
 
 class BlogPost extends Model
 {
-    use Restorable;
+    use Restorable, Metable;
 
     /**
      * The database table used by the model.
      */
-    protected $table;
+    protected $table = 'blog_posts';
+
+    /**
+     * Define the meta table
+     */
+    protected $metaTable = 'blog_posts_meta';
+
+    /**
+     * Define the meta key name
+     */
+    public $metaKeyName = 'blog_post_id';
+
+    /**
+     * Prevent meta from being populated
+     */
+    public $hideMeta = true;
 
     /**
      * The attributes that are mass assignable.
@@ -43,23 +59,6 @@ class BlogPost extends Model
     protected $withCount = [
         'comments'
     ];
-
-    /**
-     * Creates a new instance of the model.
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = 'blog_posts';
-    }
-
-    /**
-     * Retrieve the model for a bound value.
-     */
-    public function resolveRouteBinding($value, $field = NULL)
-    {
-        return $this->withTrashed()->where($this->getRouteKeyName(), $value)->first();
-    }
 
     /**
      * This belongsTo author.
@@ -118,14 +117,6 @@ class BlogPost extends Model
     }
 
     /**
-     * This hasMany metas.
-     */
-    public function metas()
-    {
-        return $this->hasMany(BlogPostMeta::class, 'post_id');
-    }
-
-    /**
      * Scope find by slug.
      */
     public function scopeFindBySlug($query, $slug)
@@ -173,45 +164,6 @@ class BlogPost extends Model
     public function scopeAuthoredBy($query, $id)
     {
         return $query->whereIn('author_id', (array) $id);
-    }
-
-    /**
-     * Get meta.
-     */
-    public function getMetas()
-    {
-        return $this->metas ?? [];
-    }
-
-    /**
-     * Get meta.
-     */
-    public function getMeta($key)
-    {
-        return $this->metas()->findByKey($key)->content ?? null;
-    }
-
-    /**
-     * Set meta.
-     */
-    public function setMeta($key, $value)
-    {
-        $this->metas()->updateOrCreate(['key' => $key], ['content' => $value]);
-        return $this;
-    }
-
-    /**
-     * Querying the default metas.
-     */
-    public function insertDefaultMetas()
-    {
-        $metas = [];
-        foreach ((new BlogPostMeta())->defaultMetas($this) as $key => $content) {
-            $metas[] = compact('key', 'content');
-        }
-
-        $this->metas()->createMany($metas);
-        return $this;
     }
 
     /**

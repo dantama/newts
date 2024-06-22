@@ -9,7 +9,7 @@ class BlogCategory extends Model
     /**
      * The database table used by the model.
      */
-    protected $table;
+    protected $table = 'blog_categories';
 
     /**
      * The attributes that are mass assignable.
@@ -24,15 +24,6 @@ class BlogCategory extends Model
     protected $dates = [
         'created_at', 'updated_at'
     ];
-
-    /**
-     * Creates a new instance of the model.
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = 'blog_categories';
-    }
 
     /**
      * This belongsToMany posts.

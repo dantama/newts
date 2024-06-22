@@ -62,6 +62,7 @@ class AppDatabaseSeeder extends Seeder
                 'BlogCategory' => ['read', 'write', 'delete'],
                 'BlogPostComment' => ['read', 'write', 'delete'],
                 'BlogPostTag' => ['read', 'write', 'delete'],
+                'Subscriber' => ['read', 'write', 'delete'],
             ]
         ];
 

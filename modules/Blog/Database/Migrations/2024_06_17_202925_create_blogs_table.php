@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Traits\Metable\MetableSchema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ class CreateBlogsTable extends Migration
             $table->boolean('commentable')->default(1);
             $table->boolean('visibled')->default(1);
             $table->integer('views_count')->default(0);
+            $table->unsignedTinyInteger('approved')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -28,14 +30,7 @@ class CreateBlogsTable extends Migration
             $table->foreign('author_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
 
-        Schema::create('blog_post_metas', function (Blueprint $table) {
-            $table->unsignedInteger('post_id');
-            $table->string('key');
-            $table->text('content')->nullable();
-
-            $table->primary(['post_id', 'key']);
-            $table->foreign('post_id')->references('id')->on('blog_posts')->onUpdate('cascade')->onDelete('cascade');
-        });
+        MetableSchema::create('blog_posts_meta', 'blog_post_id', 'blog_posts', 'unsignedInteger');
 
         Schema::create('blog_post_likes', function (Blueprint $table) {
             $table->unsignedInteger('post_id');
@@ -71,7 +66,7 @@ class CreateBlogsTable extends Migration
             $table->unsignedSmallInteger('category_id');
 
             $table->primary(['post_id', 'category_id']);
-            
+
             $table->foreign('post_id')->references('id')->on('blog_posts')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('blog_categories')->onUpdate('cascade')->onDelete('cascade');
         });
@@ -83,6 +78,13 @@ class CreateBlogsTable extends Migration
             $table->primary(['post_id', 'name']);
 
             $table->foreign('post_id')->references('id')->on('blog_posts')->onUpdate('cascade')->onDelete('cascade');
+        });
+
+        Schema::create('subscribers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('email');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

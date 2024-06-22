@@ -145,6 +145,14 @@ class User extends Authenticatable
     }
 
     /**
+     * This has many logs.
+     */
+    public function fcmtokens()
+    {
+        return $this->hasMany(UserFcmToken::class, 'user_id');
+    }
+
+    /**
      * Create log.
      */
     public function log($message, $modelable_type = null, $modelable_id = null)
@@ -153,5 +161,21 @@ class User extends Authenticatable
         $user_agent = getenv('HTTP_USER_AGENT');
 
         return $this->logs()->create(compact('message', 'modelable_type', 'modelable_id', 'ip', 'user_agent'));
+    }
+
+    /**
+     * Specifies the user FCM notification route
+     */
+    public function routeNotificationForFcm()
+    {
+        return $this->getDeviceTokens();
+    }
+
+    /**
+     * get all FCM token from current user
+     */
+    public function getDeviceTokens()
+    {
+        return array_filter($this->fcmtokens->token ?? '');
     }
 }

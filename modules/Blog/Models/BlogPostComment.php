@@ -2,13 +2,13 @@
 
 namespace Modules\Blog\Models;
 
+use App\Models\Traits\Restorable\Restorable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Account\Models\User;
 
 class BlogPostComment extends Model
 {
-    use SoftDeletes;
+    use Restorable;
 
     /**
      * The database table used by the model.
