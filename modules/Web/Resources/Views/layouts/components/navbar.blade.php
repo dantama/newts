@@ -1,12 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top d-block py-2" data-navbar-on-scroll="data-navbar-on-scroll">
-    <div class="container"><a class="navbar-brand" href="index.html"><img src="{{ asset('/img/logo/logo.png') }}" height="45" alt="logo" /></a>
+    <div class="container">
+        <a class="navbar-brand" href="{{ env('APP_URL') }}">
+            <img src="{{ asset('/img/logo/logo.png') }}" height="45" alt="logo" />
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
         <div class="navbar-collapse border-top border-lg-0 mt-lg-0 collapse mt-4" id="navbarSupportedContent">
             <ul class="navbar-nav pt-lg-0 font-base ms-auto pt-2">
                 <li class="nav-item px-2"><a class="nav-link active" aria-current="page" href="{{ env('APP_URL') }}">Beranda</a></li>
-                <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="pricing.html">Profil</a></li>
-                <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="web-development.html">Artikel</a></li>
-                <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="user-research.html">Kegiatan</a></li>
+                <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="{{ route('web::profile') }}">Profil</a></li>
+                <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="{{ route('web::blogs') }}">Artikel</a></li>
+                <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="{{ route('web::events') }}">Kegiatan</a></li>
             </ul>
             <a class="btn btn-danger order-lg-0 text-light order-1" href="{{ route('account::home') }}">Masuk <i class="mdi mdi-account-arrow-right-outline"></i></a>
             <form class="d-flex d-block d-lg-none my-3">
