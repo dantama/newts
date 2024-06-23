@@ -2,14 +2,14 @@
 
 namespace Modules\Core\Models;
 
+use App\Models\Traits\Metable\Metable;
 use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Account\Models\User;
 
 class Manager extends Model
 {
-    use Restorable, Searchable;
+    use Restorable, Searchable, Metable;
 
     /**
      * Define the table
@@ -35,7 +35,7 @@ class Manager extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'user_id', 'managerable_type', 'managerable_id', 'position_id'
+        'member_id', 'unit_dept_id', 'start_at', 'end_at', 'meta'
     ];
 
     /**
@@ -53,15 +53,9 @@ class Manager extends Model
     /**
      * The attributes that should be cast to native types.
      */
-    protected $casts = [];
-
-    /**
-     * Retrieve the model for a bound value.
-     */
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return $this->withTrashed()->where($this->getRouteKeyName(), $value)->first();
-    }
+    protected $casts = [
+        'meta' => 'object'
+    ];
 
     /**
      * This belongsTo User.
@@ -84,7 +78,7 @@ class Manager extends Model
      */
     public function contract()
     {
-        return $this->hasOne(contract::class, 'manager_id')->active();
+        return $this->hasOne(ManagerContract::class, 'manager_id')->latest();
     }
 
     /**
@@ -92,7 +86,7 @@ class Manager extends Model
      */
     public function contracts()
     {
-        return $this->hasMany(contract::class, 'manager_id');
+        return $this->hasMany(ManagerContract::class, 'manager_id');
     }
 
     /**
@@ -100,7 +94,7 @@ class Manager extends Model
      */
     public function scopeInCenter($query)
     {
-        return $query->where('managerable_type', 'App\Models\ManagementCenter');
+        // return $query->where('managerable_type', 'App\Models\ManagementCenter');
     }
 
     /**
@@ -108,7 +102,7 @@ class Manager extends Model
      */
     public function scopeWhereManagementCentersIn($query, $id)
     {
-        return $query->inCenter()->whereIn('managerable_id', (array) $id);
+        // return $query->inCenter()->whereIn('managerable_id', (array) $id);
     }
 
     /**
@@ -116,7 +110,7 @@ class Manager extends Model
      */
     public function scopeInProvince($query)
     {
-        return $query->where('managerable_type', 'App\Models\ManagementProvince');
+        // return $query->where('managerable_type', 'App\Models\ManagementProvince');
     }
 
     /**
@@ -124,12 +118,12 @@ class Manager extends Model
      */
     public function scopeWhereManagementProvincesIn($query, $id)
     {
-        return $query->inProvince()->whereIn('managerable_id', (array) $id);
+        // return $query->inProvince()->whereIn('managerable_id', (array) $id);
     }
 
     public function scopeInPerwil($query)
     {
-        return $query->where('managerable_type', 'App\Models\ManagementPerwil');
+        // return $query->where('managerable_type', 'App\Models\ManagementPerwil');
     }
 
     /**
@@ -137,7 +131,7 @@ class Manager extends Model
      */
     public function scopeWhereManagementPerwilIn($query, $id)
     {
-        return $query->inPerwil()->whereIn('managerable_id', (array) $id);
+        // return $query->inPerwil()->whereIn('managerable_id', (array) $id);
     }
 
     /**
@@ -145,7 +139,7 @@ class Manager extends Model
      */
     public function scopeInRegency($query)
     {
-        return $query->where('managerable_type', 'App\Models\ManagementRegency');
+        // return $query->where('managerable_type', 'App\Models\ManagementRegency');
     }
 
     /**
@@ -153,7 +147,7 @@ class Manager extends Model
      */
     public function scopeWhereManagementRegenciesIn($query, $id)
     {
-        return $query->inRegency()->whereIn('managerable_id', (array) $id);
+        // return $query->inRegency()->whereIn('managerable_id', (array) $id);
     }
 
     /**
@@ -161,7 +155,7 @@ class Manager extends Model
      */
     public function scopeInDistrict($query)
     {
-        return $query->where('managerable_type', 'App\Models\ManagementDistrict');
+        // return $query->where('managerable_type', 'App\Models\ManagementDistrict');
     }
 
     /**
@@ -169,6 +163,6 @@ class Manager extends Model
      */
     public function scopeWhereManagementDistrictIn($query, $id)
     {
-        return $query->inDistrict()->whereIn('managerable_id', (array) $id);
+        // return $query->inDistrict()->whereIn('managerable_id', (array) $id);
     }
 }

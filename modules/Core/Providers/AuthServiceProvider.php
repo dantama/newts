@@ -19,7 +19,7 @@ class AuthServiceProvider extends ServiceProvider
         Models\Level::class => Policies\LevelPolicy::class,
         Models\Member::class => Policies\MemberPolicy::class,
         Models\MemberLevel::class => Policies\MemberLevelPolicy::class,
-        Models\MemberPosition::class => Policies\MemberPositionPolicy::class,
+        Models\MemberAchievement::class => Policies\MemberAchievementPolicy::class,
         Models\Manager::class => Policies\ManagerPolicy::class,
         Models\ManagerContract::class => Policies\ManagerContractPolicy::class,
         Models\Position::class => Policies\PositionPolicy::class,

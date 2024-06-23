@@ -141,7 +141,7 @@ return new class extends Migration
         MetableSchema::create('members_meta', 'member_id', 'members', 'unsignedInteger');
 
         Schema::create('member_levels', function (Blueprint $table) {
-            $table->tinyIncrements('id');
+            $table->Increments('id');
             $table->unsignedInteger('member_id');
             $table->unsignedTinyInteger('level_id');
             $table->timestamp('start_at')->nullable();
@@ -154,10 +154,12 @@ return new class extends Migration
             $table->foreign('level_id')->references('id')->on('levels')->onUpdate('cascade')->onDelete('cascade');
         });
 
-        Schema::create('member_positions', function (Blueprint $table) {
+        Schema::create('member_achievements', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->unsignedInteger('member_id');
-            $table->unsignedInteger('unit_position_id');
+            $table->nullableMorphs('modelable_id');
+            $table->string('label');
+            $table->unsignedTinyInteger('achievement_id');
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
             $table->text('meta')->nullable();
@@ -165,7 +167,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('member_id')->references('id')->on('members')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('unit_position_id')->references('id')->on('unit_positions')->onUpdate('cascade')->onDelete('cascade');
         });
 
         Schema::create('managers', function (Blueprint $table) {

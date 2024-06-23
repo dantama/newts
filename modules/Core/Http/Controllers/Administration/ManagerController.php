@@ -21,8 +21,12 @@ class ManagerController extends Controller
      */
     public function index(Request $request)
     {
-        $managers = Manager::with('member', 'unit_departement.departement', 'contract', 'children', 'meta')
-            ->search($request->get('search'))
+        $managers = Manager::with([
+            'member' => fn ($m) => $m->with('level.level', 'user'),
+            'unit_departement.departement',
+            'contract.unit_position.position',
+            'meta'
+        ])->search($request->get('search'))
             ->whenTrashed($request->get('trash'))
             ->paginate($request->get('limit', 10));
 

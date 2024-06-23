@@ -79,7 +79,7 @@
                                                         <tr class="text-muted small bg-light">
                                                             <th class="border-bottom fw-normal"></th>
                                                             <th class="border-bottom fw-normal">Tingkat</th>
-                                                            <th class="border-bottom fw-normal">Periode</th>
+                                                            <th class="border-bottom fw-normal text-center">Periode</th>
                                                             <th class="border-bottom fw-normal">Sertifikat</th>
                                                             <th class="border-bottom fw-normal"></th>
                                                         </tr>
@@ -88,16 +88,20 @@
                                                         @forelse($member->levels as $key => $level)
                                                             <tr class="small">
                                                                 <td></td>
-                                                                <td class="text-dark" width="25%">{{ $level->name }}</td>
+                                                                <td class="text-dark" width="25%">{{ $level->level->name }}</td>
                                                                 <td nowrap class="text-center">
                                                                     <div class="justify-content-center align-items-center d-flex">
-                                                                        <div class="">
-                                                                            <h6 class="mb-0">{{ $level->start_at->format('d-M') }}</h6> <small class="text-muted">{{ $level->start_at->format('Y') }}</small>
-                                                                        </div>
+                                                                        @if ($level->start_at)
+                                                                            <div class="">
+                                                                                <h6 class="mb-0">{{ $level->start_at->format('d-M') }}</h6> <small class="text-muted">{{ $level->start_at->format('Y') }}</small>
+                                                                            </div>
+                                                                        @endif
                                                                         <div class="text-muted small mx-2">&mdash; s.d. &mdash;</div>
-                                                                        <div class="">
-                                                                            <h6 class="mb-0">{{ $level->end_at->format('d-M') }}</h6> <small class="text-muted">{{ $level->end_at->format('Y') }}</small>
-                                                                        </div>
+                                                                        @if ($level->end_at)
+                                                                            <div class="">
+                                                                                <h6 class="mb-0">{{ $level->end_at->format('d-M') }}</h6> <small class="text-muted">{{ $level->end_at->format('Y') }}</small>
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
                                                                 </td>
                                                                 <td width="35%">

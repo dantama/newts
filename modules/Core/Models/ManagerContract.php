@@ -39,9 +39,7 @@ class ManagerContract extends Model
     /**
      * The relations to eager load on every query.
      */
-    public $with = [
-        'detail'
-    ];
+    public $with = [];
 
     /**
      * The accessors to append to the model's array form.
@@ -60,5 +58,10 @@ class ManagerContract extends Model
     public function contract()
     {
         return $this->belongsTo(Contract::class, 'contract_id');
+    }
+
+    public function unit_position()
+    {
+        return $this->belongsTo(UnitPosition::class, 'unit_position_id');
     }
 }

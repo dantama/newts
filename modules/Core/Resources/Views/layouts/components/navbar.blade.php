@@ -2,15 +2,21 @@
     <div class="container-fluid px-3">
         <div class="navbar-nav align-items-center me-3">
             <button id="toggle-sidebar" class="btn btn-secondary rounded-3 border-0 bg-gray-200 p-2" style="width: 42px; height: 42px;"><i class="mdi mdi-menu h5 mb-0"></i></button>
-            <span class="ms-3 fw-bold mb-0">@yield('navtitle', Str::limit(config('modules.admin.name'), 12))</span>
+            <span class="fw-bold mb-0 ms-3">@yield('navtitle', Str::limit(config('modules.admin.name'), 12))</span>
         </div>
-        <ul class="navbar-nav ms-auto d-flex align-items-center">
+        <ul class="navbar-nav d-flex align-items-center ms-auto">
             <form class="d-none d-lg-block me-xl-5" action="" method="get">
                 <div class="input-group">
                     <input name="query" type="search" class="form-control" placeholder="Find something here .." value="{{ request('query') }}">
                     <button class="btn btn-dark"><i class="mdi mdi-magnify"></i></button>
                 </div>
             </form>
+            <li class="nav-item dropdown">
+                <a class="nav-link mx-md-2 mx-1 px-2" href="javascript:;" role="button" data-bs-toggle="dropdown">
+                    <i class="mdi mdi-apps" style="font-size: 20px;"></i>
+                </a>
+                @include('components.apps')
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" role="button" data-bs-toggle="dropdown">
                     <i class="mdi mdi-bell-outline h5 mb-0 p-2"></i>
@@ -30,7 +36,7 @@
                 </a>
                 @include('x-account::User.navbar-accounts-dropdown')
             </li>
-            <div class="form-check form-switch ms-3 d-none">
+            <div class="form-check form-switch d-none ms-3">
                 <input class="form-check-input" type="checkbox" id="toggle-theme" value="1" checked>
                 <label class="form-check-label" for="theme-toggle"></label>
             </div>

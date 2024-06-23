@@ -11,7 +11,11 @@
                 <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="{{ route('web::blogs') }}">Artikel</a></li>
                 <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="{{ route('web::events') }}">Kegiatan</a></li>
             </ul>
-            <a class="btn btn-danger order-lg-0 text-light order-1" href="{{ route('account::home') }}">Masuk <i class="mdi mdi-account-arrow-right-outline"></i></a>
+            @guest
+                <a class="btn btn-danger order-lg-0 text-light order-1" href="{{ route('account::home') }}">Masuk <i class="mdi mdi-account-arrow-right-outline"></i></a>
+            @else
+                <a class="btn btn-danger order-lg-0 text-light order-1" href="{{ route('account::home') }}">Akun <i class="mdi mdi-account-arrow-right-outline"></i></a>
+            @endguest
             <form class="d-flex d-block d-lg-none my-3">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 <button class="btn btn-outline-primary" type="submit">Search</button>

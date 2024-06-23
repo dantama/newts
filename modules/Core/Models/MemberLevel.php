@@ -39,8 +39,8 @@ class MemberLevel extends Model
     /**
      * The relations to eager load on every query.
      */
-    public $with = [
-        'detail'
+    public $casts = [
+        'meta' => 'array'
     ];
 
     /**

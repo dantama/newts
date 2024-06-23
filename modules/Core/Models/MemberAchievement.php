@@ -6,20 +6,20 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
-class MemberPosition extends Model
+class MemberAchievement extends Model
 {
     use Restorable, Searchable;
 
     /**
      * The table associated with the model.
      */
-    protected $table = 'org_member_contracts';
+    protected $table = 'member_achievements';
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'member_id', 'level_id', 'year', 'meta'
+        'member_id', 'achievement_id', 'modelable_type', 'bodelable_id', 'label', 'start_at', 'end_at', 'meta'
     ];
 
     /**
@@ -39,9 +39,7 @@ class MemberPosition extends Model
     /**
      * The relations to eager load on every query.
      */
-    public $with = [
-        'detail'
-    ];
+    public $with = [];
 
     /**
      * The accessors to append to the model's array form.
@@ -57,8 +55,13 @@ class MemberPosition extends Model
     }
 
 
-    public function level()
+    public function achievement()
     {
-        return $this->belongsTo(Level::class, 'level_id');
+        // return $this->belongsTo(Level::class, 'level_id');
+    }
+
+    public function modelable()
+    {
+        return $this->morphTo();
     }
 }

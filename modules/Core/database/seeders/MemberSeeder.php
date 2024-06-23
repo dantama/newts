@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Modules\Account\Models\User;
-use Modules\Core\Models\Organization;
 use Modules\Core\Models\Unit;
 
 class MemberSeeder extends Seeder
@@ -29,7 +28,7 @@ class MemberSeeder extends Seeder
         $data = json_decode($json, true);
 
         foreach ($data as $value) {
-            // Create the main organization
+            // Create the user
             $user = new User([
                 ...Arr::except($value, ['meta', 'member', 'email']),
                 'email_address' => $value['email']
@@ -46,12 +45,19 @@ class MemberSeeder extends Seeder
                 // Handle provinces
                 if (!empty($value['member'])) {
                     $org = Unit::whereMeta('org_code', '=', $value['member']['pimda'])->first()->id;
-                    $user->member()->create([
-                        ...Arr::except($value['member'], ['regency', 'pimda', 'joined_at']),
+                    $member = $user->member()->create([
+                        ...Arr::except($value['member'], ['regency', 'pimda', 'joined_at', 'level']),
                         'type' => 1,
                         'joined_at' => now(),
                         'unit_id' => $org
                     ]);
+                    $data = collect($value['member']['level'])->first();
+                    if (!empty($data)) {
+                        $member->level()->create([
+                            'level_id' => $data['level_id'],
+                            'meta' => $data['meta']
+                        ]);
+                    }
                 }
             }
         }

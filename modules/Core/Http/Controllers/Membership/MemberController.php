@@ -27,7 +27,7 @@ class MemberController extends Controller
 
         $param = $request->get('unit') ? $this->transformUnit(Unit::find($request->get('unit'))) : '';
 
-        $data = Member::with('user', 'unit', 'level', 'meta')
+        $data = Member::with('user', 'unit', 'levels.level', 'meta')
             ->search($request->get('search'))
             ->whenUnits($param)
             ->whenType($request->get('membership'))

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 AppDatabaseSeeder::class,
                 \Modules\Account\Database\Seeders\AccountDatabaseSeeder::class,
+                \Modules\Reference\Database\Seeders\ReferenceDatabaseSeeder::class,
                 \Modules\Blog\Database\Seeders\BlogCategorySeeder::class,
                 \Modules\Core\Database\Seeders\DepartementSeeder::class,
                 \Modules\Core\Database\Seeders\LevelSeeder::class,
@@ -27,8 +28,8 @@ class DatabaseSeeder extends Seeder
                 \Modules\Core\Database\Seeders\PositionSeeder::class,
                 \Modules\Core\Database\Seeders\OrganizationSeeder::class,
                 \Modules\Core\Database\Seeders\OrganizationPositionSeeder::class,
-                \Modules\Reference\Database\Seeders\ReferenceDatabaseSeeder::class,
                 \Modules\Core\Database\Seeders\MemberSeeder::class,
+                \Modules\Core\Database\Seeders\ManagerSeeder::class,
             ]);
 
             DB::insert('insert into user_roles (role_id, user_id) values (?, ?)', [1, User::first()->id]);

@@ -31,9 +31,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nama</th>
-                                    <th class="text-center">Organisasi</th>
-                                    <th nowrap>No. Telepon</th>
-                                    <th nowrap>Email</th>
+                                    <th>Unit</th>
+                                    <th>Jabatan</th>
+                                    <th>Departemen</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -41,30 +41,22 @@
                                 @forelse($managers as $manager)
                                     <tr @if ($manager->trashed()) class="table-light text-muted" @endif>
                                         <td>{{ $loop->iteration + $managers->firstItem() - 1 }}</td>
-                                        <td width="20%">
-                                            <strong>{{ $manager->name }}</strong>
+                                        <td>
+                                            <strong>{{ $manager->member->user->name }}</strong>
                                         </td>
-                                        <td class="text-center">
-                                            {{ $manager->getMeta('org_code') }}
+                                        <td>
+                                            {{ $manager->unit_departement->unit->name }}
                                         </td>
-                                        <td width="20%">
-                                            @if (!empty($manager->getMeta('org_phone')))
-                                                <div class="py-1">
-                                                    <a href="javascript:;" class="text-dark"> {{ $manager->getMeta('org_phone') }}</a>
-                                                </div>
-                                            @endif
+                                        <td>
+                                            {{ ucwords(Str::lower($manager->contract ? $manager->contract->unit_position->position->name : '')) }}
                                         </td>
-                                        <td width="35%">
-                                            @if (!empty($manager->getMeta('org_email')))
-                                                <div class="py-1">
-                                                    <a href="mailto:{{ $manager->getMeta('org_email') }}" class="text-dark"> {{ $manager->getMeta('org_email') }}</a>
-                                                </div>
-                                            @endif
+                                        <td>
+                                            {{ $manager->unit_departement->departement->name }}
                                         </td>
                                         <td class="py-2 text-end" nowrap>
                                             @if ($manager->trashed())
                                                 @can('restore', $manager)
-                                                    <form class="form-block form-confirm d-inline" action="{{ route('core::administration.managers.restore', ['unit' => $manager->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
+                                                    <form class="form-block form-confirm d-inline" action="{{ route('core::administration.managers.restore', ['manager' => $manager->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
                                                         <button class="btn btn-soft-info rounded px-2 py-1" data-bs-toggle="tooltip" title="Pulihkan"><i class="mdi mdi-refresh"></i></button>
                                                     </form>
                                                 @endcan
@@ -73,10 +65,10 @@
                                                     <button class="btn btn-soft-info rounded px-2 py-1" data-bs-toggle="tooltip" title="Lihat daftar"><i class="mdi mdi-file-tree-outline"></i></button>
                                                 </span>
                                                 @can('update', $manager)
-                                                    <a class="btn btn-soft-warning rounded px-2 py-1" href="{{ route('core::administration.managers.show', ['unit' => $manager->id, 'next' => url()->current()]) }}" method="post" data-bs-toggle="tooltip" title="Ubah"><i class="mdi mdi-pencil-outline"></i></a>
+                                                    <a class="btn btn-soft-warning rounded px-2 py-1" href="{{ route('core::administration.managers.show', ['manager' => $manager->id, 'next' => url()->current()]) }}" method="post" data-bs-toggle="tooltip" title="Ubah"><i class="mdi mdi-pencil-outline"></i></a>
                                                 @endcan
                                                 @can('kill', $manager)
-                                                    <form class="form-block form-confirm d-inline" action="{{ route('core::administration.managers.destroy', ['unit' => $manager->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
+                                                    <form class="form-block form-confirm d-inline" action="{{ route('core::administration.managers.destroy', ['manager' => $manager->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
                                                         <button class="btn btn-soft-danger rounded px-2 py-1" data-bs-toggle="tooltip" title="Hapus"><i class="mdi mdi-trash-can-outline"></i></button>
                                                     </form>
                                                 @endcan
@@ -90,55 +82,20 @@
                                                     <thead>
                                                         <tr class="text-muted small bg-light">
                                                             <th class="border-bottom fw-normal"></th>
-                                                            <th class="border-bottom fw-normal">Pimda</th>
-                                                            <th class="border-bottom fw-normal">Kode</th>
+                                                            <th class="border-bottom fw-normal">Tingkat</th>
+                                                            <th class="border-bottom fw-normal">NBTS</th>
                                                             <th class="border-bottom fw-normal">No Telepon</th>
                                                             <th class="border-bottom fw-normal">Email</th>
                                                             <th class="border-bottom fw-normal"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @forelse($manager->children as $key => $area)
-                                                            <tr class="small">
-                                                                <td></td>
-                                                                <td class="text-dark" width="25%">{{ $area->name }}</td>
-                                                                <td class="text-center">{{ $area->getMeta('org_code') }}</td>
-                                                                <td width="15%">
-                                                                    @if (!empty($area->getMeta('org_phone')))
-                                                                        <a href="javascript:;" class="text-dark"> {{ $area->getMeta('org_phone') }}</a>
-                                                                    @endif
-                                                                </td>
-                                                                <td width="35%">
-                                                                    @if (!empty($area->getMeta('org_email')))
-                                                                        <a href="mailto:{{ $area->getMeta('org_email') }}" class="text-dark"> {{ $area->getMeta('org_email') }}</a>
-                                                                    @endif
-                                                                </td>
-                                                                <td class="text-end">
-                                                                    <div class="me-1">
-                                                                        @if ($area->trashed())
-                                                                            @can('restore', $area)
-                                                                                <form class="form-block form-confirm d-inline" action="{{ route('core::administration.managers.restore', ['unit' => $area->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('put')
-                                                                                    <button class="btn btn-soft-info rounded px-2 py-1" data-bs-toggle="tooltip" title="Pulihkan"><i class="mdi mdi-refresh"></i></button>
-                                                                                </form>
-                                                                            @endcan
-                                                                        @else
-                                                                            @can('update', $area)
-                                                                                <a class="btn btn-sm btn-soft-warning rounded px-2 py-1" href="{{ route('core::administration.managers.show', ['unit' => $area->id, 'next' => url()->current()]) }}" method="post" data-bs-toggle="tooltip" title="Ubah"><i class="mdi mdi-pencil-outline"></i></a>
-                                                                            @endcan
-                                                                            @can('kill', $area)
-                                                                                <form class="form-block form-confirm d-inline" action="{{ route('core::administration.managers.destroy', ['unit' => $area->id, 'next' => url()->current()]) }}" method="post"> @csrf @method('delete')
-                                                                                    <button class="btn btn-sm btn-soft-danger rounded px-2 py-1" data-bs-toggle="tooltip" title="Hapus"><i class="mdi mdi-trash-can-outline"></i></button>
-                                                                                </form>
-                                                                            @endcan
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @empty
-                                                            <tr>
-                                                                <td colspan="100%">Tidak ada data</td>
-                                                            </tr>
-                                                        @endforelse
+                                                        <th class="border-bottom fw-normal"></th>
+                                                        <th class="border-bottom fw-normal">{{ $manager->member->level->level->name }}</th>
+                                                        <th class="border-bottom fw-normal">{{ $manager->member->nbts }}</th>
+                                                        <th class="border-bottom fw-normal">{{ $manager->member->user->getMeta('profile_phone') }}</th>
+                                                        <th class="border-bottom fw-normal">{{ $manager->member->user->email_address }}</th>
+                                                        <th class="border-bottom fw-normal"></th>
                                                     </tbody>
                                                 </table>
                                             </div>
