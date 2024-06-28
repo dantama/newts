@@ -73,4 +73,15 @@ class WebController extends AppController
 
         return redirect()->back();
     }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function blog(Request $request)
+    {
+        $categories = BlogCategory::get();
+        $latest_posts = BlogPost::whereApproved(1)->get();
+
+        return view('web::blog', compact('categories', 'latest_posts'));
+    }
 }

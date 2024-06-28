@@ -36,9 +36,10 @@
 	--bs-danger: #ee4d47;
 	--bs-light: #f0f4f9;
 	--bs-dark: #23242a;
-	--bs-font-sans-serif: "Rubik", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	--bs-font-sans-serif: "Outfit", "Noto Sans JP", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	--bs-font-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 	--bs-gradient: linear-gradient(180deg, rgba(255, 254, 254, 0.15), rgba(255, 254, 254, 0));
+	--main-font: "Noto Sans JP", sans-serif;
 }
 
 *,
@@ -92,7 +93,7 @@ h6,
 .h6 {
 	margin-top: 0;
 	margin-bottom: 0.5rem;
-	font-family: "DM Serif Display", cursive;
+	font-family: var(--main-font);
 	font-weight: 300;
 	line-height: 1.2;
 	color: #002147;
@@ -3827,8 +3828,8 @@ fieldset:disabled .btn {
 
 .btn-danger {
 	color: #fffefe;
-	background-color: #ee4d47;
-	border-color: #ee4d47;
+	background-color: #ff3f12;
+	border-color: #ff3f12;
 }
 
 .btn-danger:hover {

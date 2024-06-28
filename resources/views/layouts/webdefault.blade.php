@@ -22,6 +22,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link href="{{ asset(mix('css/styles.css')) }}" rel="stylesheet">
     <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
     <link href="{{ asset(mix('vendor/@mdi/css/materialdesignicons.min.css')) }}" rel="stylesheet">
