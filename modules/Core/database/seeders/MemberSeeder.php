@@ -51,6 +51,7 @@ class MemberSeeder extends Seeder
                         'joined_at' => now(),
                         'unit_id' => $org
                     ]);
+                    $member->setMeta('joined_at', $value['meta']['joined_at']);
                     $data = collect($value['member']['level'])->first();
                     if (!empty($data)) {
                         $member->level()->create([

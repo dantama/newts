@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->boolean('is_visible')->default(1);
+            $table->boolean('is_addable')->default(1);
             $table->softDeletes();
             $table->timestamps();
 
@@ -100,7 +101,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('unit_id');
             $table->unsignedInteger('dept_id');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->boolean('is_visible')->default(1);
             $table->softDeletes();
@@ -115,11 +116,14 @@ return new class extends Migration
             $table->Increments('id');
             $table->unsignedInteger('unit_id');
             $table->unsignedSmallInteger('position_id');
+            $table->text('description')->nullable();
+            $table->unsignedInteger('parent_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('unit_id')->references('id')->on('units')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('position_id')->references('id')->on('positions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('unit_positions')->onUpdate('cascade')->onDelete('set null');
         });
 
         Schema::create('members', function (Blueprint $table) {
@@ -131,6 +135,7 @@ return new class extends Migration
             $table->string('nbm')->nullable();
             $table->text('qr')->nullable();
             $table->timestamp('joined_at');
+            $table->boolean('is_visible')->default(1);
             $table->softDeletes();
             $table->timestamps();
 

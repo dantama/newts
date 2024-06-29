@@ -90,6 +90,14 @@ class Manager extends Model
     }
 
     /**
+     * This scope active.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('start_at', '<=', now())->where('end_at', '>=', now());
+    }
+
+    /**
      * This scope where in center.
      */
     public function scopeInCenter($query)

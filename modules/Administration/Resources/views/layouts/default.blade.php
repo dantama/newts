@@ -1,43 +1,21 @@
 @extends('layouts.default')
 
-@section('titleTemplate', ' - Admin Tapaksuci')
+@section('titleTemplate', config('modules.administration.titleTemplate'))
+
+@section('bodyclass', 'bg-light')
 
 @section('main')
-
-<div id="wrapper">
-	@include('administration::layouts.components.sidebar')
-
-	<div id="content-wrapper" class="d-flex flex-column">
-
-		<div id="content">
-			@include('administration::layouts.components.navbar')
-			<div class="container-fluid">
-				@yield('content-header')
-				@if(session('success'))
-					<div class="alert alert-success bg-success alert-dismissible fade show" role="alert">
-						{!! session('success') !!}
-						<button type="button" class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span> </button>
-					</div>
-				@endif
-				@if(session('danger'))
-					<div class="alert alert-danger bg-danger alert-dismissible fade show" role="alert">
-						{!! session('danger') !!}
-						<button type="button" class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span> </button>
-					</div>
-				@endif
-		    	@yield('content')
-			</div>
-		</div>
-
-		<footer class="sticky-footer bg-white">
-			<div class="container my-auto">
-				<div class="copyright text-center my-auto">
-					<span>Copyright &copy; Your Website 2019</span>
-				</div>
-			</div>
-		</footer>
-	</div>
-</div>
-@include('account::auth.includes.logout')
-
+    <div class="d-xl-flex min-vh-100 flex-row">
+        @include('administration::layouts.components.sidebar')
+        <div class="content flex-grow-1">
+            @include('administration::layouts.components.navbar')
+            <div class="container-fluid p-3">
+                <main class="animate__animated animate__fadeIn animate__faster">
+                    <x-alert-success></x-alert-success>
+                    <x-alert-danger></x-alert-danger>
+                    @yield('content')
+                </main>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -108,6 +108,22 @@ class Member extends Model
     }
 
     /**
+     * This has one manager.
+     */
+    public function manager()
+    {
+        return $this->hasOne(Manager::class, 'member_id')->active();
+    }
+
+    /**
+     * This has many manager.
+     */
+    public function managers()
+    {
+        return $this->hasMany(Manager::class, 'member_id');
+    }
+
+    /**
      * Scope where code in.
      */
     public function scopeWhenUnits($query, $units)
@@ -137,5 +153,34 @@ class Member extends Model
     public function scopeWhenRegencyIn($query, array $regency)
     {
         return $query->when($regency, fn ($m) => $m->whereHas('unit', fn ($u) => $u->whereMetaIn('org_regency_id', $regency)));
+    }
+
+    /**
+     * Scope member is managerial.
+     */
+    public function scopeManagerial($query)
+    {
+        return $query->whereHas('manager')->with([
+            'manager' => fn ($r) => $r->with(
+                'unit_departement',
+                'contract'
+            )
+        ])->first();
+    }
+
+    /**
+     * Scope managerUnit.
+     */
+    public function scopeManagerUnit($query)
+    {
+        return $query->managerial()->manager->unit_departement->unit_id;
+    }
+
+    /**
+     * Scope member is manager.
+     */
+    public function scopeIsManager($query): bool
+    {
+        return count($query->whereHas('manager')->get());
     }
 }

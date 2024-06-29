@@ -27,6 +27,7 @@ class Departement extends Model
         'description',
         'parent_id',
         'is_visible',
+        'is_addable',
     ];
 
     /**

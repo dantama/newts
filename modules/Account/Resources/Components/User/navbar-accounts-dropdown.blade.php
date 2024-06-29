@@ -1,7 +1,7 @@
 <div class="dropdown-menu dropdown-menu-end position-absolute rounded border-0 shadow-sm" style="min-width: 180px;">
-    @if ($user = request()->user())
+    @if ($user = Auth::user())
         <div class="dropdown-header bg-light mt-n2 rounded-top py-2">
-            <span class="d-inline-block text-truncate" style="max-width: 200px;">{{ $user->name }}</span>
+            <span class="d-inline-block text-truncate" style="max-width: 200px;">{{ Auth::user()->name ?? '' }}</span>
         </div>
     @endif
     <a class="dropdown-item py-2" href="{{ route('account::user.profile') }}"><i class="mdi mdi-account-outline"></i> My profile</a>

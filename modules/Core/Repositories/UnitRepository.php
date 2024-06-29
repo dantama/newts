@@ -11,7 +11,12 @@ trait UnitRepository
     {
         switch ($unit->type) {
             case OrganizationTypeEnum::CENTER:
-                $units = $unit->children()->children()->flatten()->pluck('id')->toArray();
+                $units = $unit->children()->with('children')->get()->map(function ($u) {
+                    return [
+                        'id' => $u->id,
+                        'child_id' => $u->children->pluck('id')
+                    ];
+                })->flatten()->toArray();
                 break;
 
             case OrganizationTypeEnum::REGION:

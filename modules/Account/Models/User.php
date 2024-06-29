@@ -16,6 +16,7 @@ use Modules\Auth\Notifications\ForgotPasswordNotification;
 use Modules\Account\Database\Factories\UserFactory;
 use App\Models\Traits\HasRole;
 use Illuminate\Support\Facades\Hash;
+use Modules\Core\Models\Manager;
 use Modules\Core\Models\Member;
 
 class User extends Authenticatable
@@ -177,5 +178,15 @@ class User extends Authenticatable
     public function getDeviceTokens()
     {
         return array_filter($this->fcmtokens->token ?? '');
+    }
+
+    public function managers()
+    {
+        return $this->hasManyThrough(Manager::class, Member::class, 'user_id', 'member_id', 'id', 'id');
+    }
+
+    public function manager()
+    {
+        return $this->hasOneThrough(Manager::class, Member::class, 'user_id', 'member_id', 'id', 'id')->active();
     }
 }

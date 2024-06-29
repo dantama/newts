@@ -19,4 +19,28 @@ enum LevelTypeEnum: int
             self::STUDENT => 'Siswa',
         };
     }
+
+    /**
+     * Get the label accessor with color() object
+     */
+    public function color(): string
+    {
+        return match ($this) {
+            self::WARRIOR => 'danger',
+            self::CADRE => 'primary',
+            self::STUDENT => 'success',
+        };
+    }
+
+    /**
+     * Get the label accessor with icon() object
+     */
+    public function icon(): string
+    {
+        return match ($this) {
+            self::WARRIOR => 'mdi mdi-account',
+            self::CADRE => 'mdi mdi-account',
+            self::STUDENT => 'mdi mdi-account',
+        };
+    }
 }
