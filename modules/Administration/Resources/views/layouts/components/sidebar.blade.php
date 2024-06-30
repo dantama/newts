@@ -40,6 +40,9 @@
                         <li>
                             <a class="nav-link" href="{{ route('administration::members.index') }}"> Anggota </a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('administration::students.index') }}"> Siswa </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="divider">Account</li>

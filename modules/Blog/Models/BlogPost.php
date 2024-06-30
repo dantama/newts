@@ -4,13 +4,14 @@ namespace Modules\Blog\Models;
 
 use App\Models\Traits\Metable\Metable;
 use App\Models\Traits\Restorable\Restorable;
+use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Account\Models\User;
 
 class BlogPost extends Model
 {
-    use Restorable, Metable;
+    use Restorable, Metable, Searchable;
 
     /**
      * The database table used by the model.

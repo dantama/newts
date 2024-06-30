@@ -63,6 +63,16 @@ class AppDatabaseSeeder extends Seeder
                 'BlogPostComment' => ['read', 'write', 'delete'],
                 'BlogPostTag' => ['read', 'write', 'delete'],
                 'Subscriber' => ['read', 'write', 'delete'],
+                'Testimony' => ['read', 'write', 'delete'],
+            ],
+            'Event' => [
+                'Cart' => ['read', 'write', 'delete'],
+                'Event' => ['read', 'write', 'delete'],
+                'EventRegistrant' => ['read', 'write', 'delete'],
+                'EventType' => ['read', 'write', 'delete'],
+                'Invoice' => ['read', 'write', 'delete'],
+                'InvoiceItem' => ['read', 'write', 'delete'],
+                'InvoiceTransaction' => ['read', 'write', 'delete'],
             ]
         ];
 

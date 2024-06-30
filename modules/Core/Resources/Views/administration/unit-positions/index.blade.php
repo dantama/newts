@@ -134,6 +134,45 @@
                 <div><i class="mdi mdi-file-tree-outline mdi-48px text-light"></i></div>
             </div>
             <div class="card border-0">
+                <div class="card-body border-bottom">
+                    <div class="fw-bold"><i class="mdi mdi-filter"></i> Filter</div>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('core::administration.unit-positions.index') }}" method="get">
+                        <div class="mb-3">
+                            <label class="col-lg-4 col-xl-3 col-form-label">Jenis unit</label>
+                            <div class="col-xl-12">
+                                <div class="card @error('ctg_id') border-danger mb-1 @enderror">
+                                    <div class="overflow-auto rounded" style="max-height: 300px;">
+                                        @forelse($types as $type)
+                                            <label class="card-body border-secondary d-flex align-items-center @if (!$loop->last) border-bottom @endif py-2">
+                                                <input class="form-check-input me-3" type="radio" value="{{ $type->value }}" name="type" data-units="{{ json_encode($type->units()) }}" required>
+                                                <div>
+                                                    <div class="fw-bold mb-0">{{ $type->label() }}</div>
+                                                </div>
+                                            </label>
+                                        @empty
+                                            <div class="card-body text-muted">Tidak ada kategori</div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                                @error('ctg_id')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pencarian</label>
+                            <input class="form-control" name="search" placeholder="Cari nama atau NBTS ..." value="{{ request('search') }}" />
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-soft-danger" type="submit"><i class="mdi mdi-filter-outline"></i> Terapkan</button>
+                            <a class="btn btn-light" href="{{ route('core::administration.unit-positions.index') }}"><i class="mdi mdi-refresh"></i> Reset</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card border-0">
                 <div class="card-body">Menu lainnya</div>
                 <div class="list-group list-group-flush border-top border-light">
                     <a class="list-group-item list-group-item-action text-danger" href="{{ route('core::administration.unit-positions.index', ['trash' => !request('trash')]) }}"><i class="mdi mdi-trash-can-outline"></i> Lihat unit departemen yang {{ request('trash') ? 'tidak' : '' }} dihapus</a>

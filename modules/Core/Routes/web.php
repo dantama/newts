@@ -13,6 +13,7 @@ Route::middleware('auth')->group(function () {
     // Administration
     Route::prefix('administration')->namespace('Administration')->name('administration.')->group(function () {
         // Units
+        Route::get('units/export', 'UnitController@export')->name('units.export');
         Route::resource('units', 'UnitController');
         // Unit departement
         Route::resource('unit-departements', 'UnitDepartementController')->parameters(['unit_departements' => 'unit_departement']);
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     // Membership
     Route::prefix('membership')->namespace('Membership')->name('membership.')->group(function () {
         // Member
+        Route::post('members/import', 'MemberController@importMember')->name('members.import');
         Route::resource('members', 'MemberController');
     });
 

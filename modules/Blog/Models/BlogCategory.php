@@ -2,10 +2,13 @@
 
 namespace Modules\Blog\Models;
 
+use App\Models\Traits\Restorable\Restorable;
+use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class BlogCategory extends Model
 {
+    use Searchable, Restorable;
     /**
      * The database table used by the model.
      */

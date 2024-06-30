@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventType extends Model
 {
-    protected $table = "ts_event_types";
+    protected $table = "event_categories";
 
     /**
      * The attributes that are mass assignable.

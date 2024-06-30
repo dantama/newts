@@ -54,7 +54,8 @@ class Manager extends Model
      * The attributes that should be cast to native types.
      */
     protected $casts = [
-        'meta' => 'object'
+        'meta' => 'object',
+        'deleted_at' => 'datetime', 'created_at' => 'datetime', 'deleted_at' => 'datetime', 'start_at' => 'datetime', 'end_at' => 'datetime'
     ];
 
     /**

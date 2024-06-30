@@ -3,15 +3,12 @@
 namespace Modules\Core\Http\Controllers\Administration;
 
 use Illuminate\Http\Request;
-use Modules\Account\Models\User;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
 use Modules\Core\Models\Contract;
 use Modules\Core\Models\Manager;
-use Modules\Core\Models\Member;
 use Modules\Core\Repositories\ManagerRepository;
-use Modules\Reference\Models\Province;
 
 class ManagerController extends Controller
 {
@@ -58,12 +55,13 @@ class ManagerController extends Controller
     /**
      * Show a resource.
      */
-    public function show(Unit $unit, Request $request)
+    public function show(Manager $manager, Request $request)
     {
-        $this->authorize('update', $unit);
-        $unit->load('parents', 'meta');
-        $types = collect(OrganizationTypeEnum::cases());
+        $this->authorize('update', $manager);
+        $manager->load('meta', 'contract', 'unit_departement.unit');
+        $units = Unit::with('unit_departements.departement')->get();
+        $contracts = Contract::get();
 
-        return view('core::administration.units.show', compact('types', 'unit'));
+        return view('core::administration.managers.show', compact('manager', 'units', 'contracts'));
     }
 }

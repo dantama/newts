@@ -1,43 +1,35 @@
 @extends('layouts.default')
 
-@section('titleTemplate', ' - Admin Tapaksuci')
+@section('titleTemplate', config('modules.blog.titleTemplate'))
+
+@section('bodyclass', 'bg-light')
 
 @section('main')
-
-<div id="wrapper">
-	@include('event::layouts.components.sidebar')
-
-	<div id="content-wrapper" class="d-flex flex-column">
-
-		<div id="content">
-			@include('event::layouts.components.navbar')
-			<div class="container-fluid">
-				@yield('content-header')
-				@if(session('success'))
-					<div class="alert alert-success bg-success alert-dismissible fade show" role="alert">
-						<button type="button" class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span> </button>
-						{!! session('success') !!}
-					</div>
-				@endif
-				@if(session('danger'))
-					<div class="alert alert-danger bg-danger text-white alert-dismissible fade show" role="alert">
-						<button type="button" class="close" data-dismiss="alert"> <span aria-hidden="true">&times;</span> </button>
-						{!! session('danger') !!}
-					</div>
-				@endif
-		    	@yield('content')
-			</div>
-		</div>
-
-		<footer class="sticky-footer bg-white">
-			<div class="container my-auto">
-				<div class="copyright text-center my-auto">
-					<span>Copyright &copy; Your Website 2019</span>
-				</div>
-			</div>
-		</footer>
-	</div>
-</div>
-@include('account::auth.includes.logout')
-
+    <div class="d-xl-flex min-vh-100 flex-row">
+        @include('event::layouts.components.sidebar')
+        <div class="content d-flex flex-grow-1 flex-column" style="min-height: 100vh;">
+            @include('event::layouts.components.navbar')
+            <div class="container-fluid flex-grow-1 p-3">
+                <main class="animate__animated animate__fadeIn animate__faster">
+                    <x-alert-success></x-alert-success>
+                    <x-alert-danger></x-alert-danger>
+                    @yield('content')
+                </main>
+            </div>
+            <footer>
+                <div class="text-muted bg-white py-3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 mb-md-0 mb-1">
+                                <div class="text-md-start text-center">{{ env('APP_NAME') }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end text-center">Copyright &copy; 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
 @endsection

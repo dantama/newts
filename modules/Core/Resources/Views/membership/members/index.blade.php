@@ -206,6 +206,28 @@
                     <a class="list-group-item list-group-item-action text-danger" href="{{ route('core::membership.members.index', ['trash' => !request('trash')]) }}"><i class="mdi mdi-trash-can-outline"></i> Lihat anggota yang {{ request('trash') ? 'tidak' : '' }} dihapus</a>
                 </div>
             </div>
+            <div class="card border-0">
+                <div class="card-body border-bottom">Import anggota</div>
+                <div class="card-body">
+                    <form class="form-block" action="{{ route('core::membership.members.import') }}" enctype="multipart/form-data" method="POST">@csrf
+                        <div class="mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">File excel</label>
+                            <div class="col-md-12">
+                                <div class="tg-steps-leave-attachment">
+                                    <input class="form-control @error('file') is-invalid @enderror" name="file" type="file" id="upload-input" accept="image/*,application/pdf">
+                                    <small class="text-muted">Berkas berupa .xls atau .xlsx maksimal berukuran 2mb</small>
+                                    @error('file')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-soft-danger" type="submit"><i class="mdi mdi-filter-outline"></i> Terapkan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

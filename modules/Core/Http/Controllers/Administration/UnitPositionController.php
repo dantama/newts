@@ -25,7 +25,7 @@ class UnitPositionController extends Controller
 
         $unit_count = Unit::count();
 
-        return view('core::administration.unit-positions.index', compact('unitPoss', 'unit_count'));
+        return view('core::administration.unit-positions.index', compact('unitPoss', 'unit_count', 'types'));
     }
 
     /**

@@ -58,6 +58,7 @@ class CreateBlogsTable extends Migration
             $table->string('name');
             $table->text('metas')->nullable();
             $table->string('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

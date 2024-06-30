@@ -8,11 +8,11 @@ use App\Models\Traits\Restorable\Restorable;
 use App\Models\Traits\Searchable\Searchable;
 use Modules\Account\Models\User;
 use Modules\Core\Enums\MembershipTypeEnum;
-use Modules\Core\Enums\OrganizationTypeEnum;
+use Modules\Core\Models\Traits\MemberTrait;
 
 class Member extends Model
 {
-    use Restorable, Searchable, Metable;
+    use Restorable, Searchable, Metable, MemberTrait;
 
     /**
      * The table associated with the model.
@@ -38,7 +38,7 @@ class Member extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'unit_id', 'user_id', 'nbts', 'nbm', 'qr', 'joined_at'
+        'unit_id', 'type', 'user_id', 'nbts', 'nbm', 'qr', 'joined_at'
     ];
 
     /**

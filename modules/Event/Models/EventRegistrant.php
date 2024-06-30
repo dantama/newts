@@ -9,7 +9,7 @@ class EventRegistrant extends Model
 {
     use SoftDeletes;
 
-    protected $table = "ts_event_registrants";
+    protected $table = "event_registrants";
 
     /**
      * The attributes that are mass assignable.

@@ -23,6 +23,22 @@
                     </a>
                 </div>
             @endif
+            @if (Gate::allows('blog::access'))
+                <div class="col-4">
+                    <a class="btn btn-ghost-light text-dark w-100" href="{{ route('blog::dashboard') }}">
+                        <i class="mdi mdi-file-document-multiple-outline mdi-36px"></i>
+                        <div class="d-block text-dark">Artikel</div>
+                    </a>
+                </div>
+            @endif
+            {{-- @if (Gate::allows('event::access')) --}}
+            <div class="col-4">
+                <a class="btn btn-ghost-light text-dark w-100" href="{{ route('event::home') }}">
+                    <i class="mdi mdi-file-document-multiple-outline mdi-36px"></i>
+                    <div class="d-block text-dark">Kegiatan</div>
+                </a>
+            </div>
+            {{-- @endif --}}
             @if (Gate::allows('core::access'))
                 <div class="col-4">
                     <a class="btn btn-ghost-light text-danger w-100" href="{{ route('core::dashboard') }}">

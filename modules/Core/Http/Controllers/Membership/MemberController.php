@@ -11,6 +11,7 @@ use Modules\Core\Models\Member;
 use Modules\Reference\Models\Province;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Modules\Core\Imports\Member\MemberImport;
 use Modules\Core\Repositories\UnitRepository;
 
 class MemberController extends Controller
@@ -78,5 +79,31 @@ class MemberController extends Controller
         $types = collect(OrganizationTypeEnum::cases());
 
         return view('core::membership.members.show', compact('types', 'unit'));
+    }
+
+    public function importMember(Request $request)
+    {
+        $request->validate([
+            'file' => 'file|mimes:xlsx|max:2048',
+        ]);
+
+        try {
+            $import = new MemberImport();
+            $import->import($request->file('file'));
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            $message = '';
+
+            foreach ($failures as $failure) {
+                $failure->row();
+                $failure->attribute();
+                $failure->errors();
+                $failure->values();
+                $message .= '<br>' . $failure->values()['nama'] . ' : ' . $failure->errors()[0];
+            }
+            return redirect()->back()->with('danger', 'Error! ' . $message);
+        }
+        return redirect()->back()->with('success', 'Berhasil impor data!');
     }
 }

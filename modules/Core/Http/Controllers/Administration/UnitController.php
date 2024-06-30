@@ -3,11 +3,12 @@
 namespace Modules\Core\Http\Controllers\Administration;
 
 use Illuminate\Http\Request;
-use Modules\Account\Models\User;
 use Modules\Core\Enums\OrganizationTypeEnum;
 use Modules\Core\Models\Unit;
 use Modules\Core\Http\Controllers\Controller;
 use Modules\Reference\Models\Province;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\Core\Exports\ExportUnit;
 
 class UnitController extends Controller
 {
@@ -58,5 +59,10 @@ class UnitController extends Controller
         $types = collect(OrganizationTypeEnum::cases());
 
         return view('core::administration.units.show', compact('types', 'unit'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new ExportUnit, 'template.xlsx');
     }
 }

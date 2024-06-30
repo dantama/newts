@@ -14,7 +14,13 @@ class AuthServiceProvider extends ServiceProvider
      * The policy mappings for the application.
      */
     protected $policies = [
-        // 
+        Models\Cart::class => Policies\CartPolicy::class,
+        Models\Event::class => Policies\EventPolicy::class,
+        Models\EventRegistrant::class => Policies\EventRegistrantPolicy::class,
+        Models\EventType::class => Policies\EventTypePolicy::class,
+        Models\Invoice::class => Policies\InvoicePolicy::class,
+        Models\InvoiceItem::class => Policies\InvoiceItemPolicy::class,
+        Models\InvoiceTransaction::class => Policies\InvoiceTransactionPolicy::class,
     ];
 
     /**

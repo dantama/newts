@@ -4,9 +4,8 @@ namespace Modules\Event\Http\Controllers\Manage;
 
 use Illuminate\Http\Request;
 use Modules\Event\Http\Controllers\Controller;
-
 use Modules\Event\Models\Event;
-use Modules\Event\Models\EventCategory;
+use Modules\Event\Models\EventType;
 
 class CategoryController extends Controller
 {
@@ -15,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $events = EventCategory::all();
+        $events = EventType::all();
 
         return view('event::manage.category.index', compact('events'));
     }
@@ -33,7 +32,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $newCategory = new EventCategory([
+        $newCategory = new EventType([
             'name' => $request->input('name'),
             'description' => $request->input('description')
         ]);
@@ -56,7 +55,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $category)
     {
-        $newCategory = EventCategory::updateorcreate(['id' => $request->input('updateid')], [
+        $newCategory = EventType::updateorcreate(['id' => $request->input('updateid')], [
             'name' => $request->input('updatename'),
             'description' => $request->input('updatedesc')
         ]);
@@ -70,14 +69,6 @@ class CategoryController extends Controller
     public function destroy(Event $event)
     {
         $user = auth()->user();
-        $managerial = $user->flattenManagerials()->first();
-
-        if (Event::whereManagementIn($managerial->pivot)->find($event->id)) {
-            $tmp = $event;
-            $event->delete();
-
-            return redirect()->back()->with('success', 'Event <strong>' . $tmp->name . ' (ID: ' . $tmp->id . ')</strong> berhasil dihapus');
-        }
 
         return redirect()->back()->with('danger', 'Terjadi kegagalan!');
     }
@@ -88,14 +79,6 @@ class CategoryController extends Controller
     public function kill(Event $event)
     {
         $user = auth()->user();
-        $managerial = $user->flattenManagerials()->first();
-
-        if (Event::onlyTrashed()->whereManagementIn($managerial->pivot)->find($event->id)) {
-            $tmp = $event;
-            $event->forceDelete();
-
-            return redirect()->back()->with('success', 'Event <strong>' . $tmp->name . ' (ID: ' . $tmp->id . ')</strong> berhasil dihapus secara permanen');
-        }
 
         return redirect()->back()->with('danger', 'Terjadi kegagalan!');
     }
@@ -106,14 +89,6 @@ class CategoryController extends Controller
     public function restore(Event $event)
     {
         $user = auth()->user();
-        $managerial = $user->flattenManagerials()->first();
-
-        if (Event::onlyTrashed()->whereManagementIn($managerial->pivot)->find($event->id)) {
-            $tmp = $event;
-            $event->restore();
-
-            return redirect()->back()->with('success', 'Event <strong>' . $tmp->name . ' (ID: ' . $tmp->id . ')</strong> berhasil dipulihkan');
-        }
 
         return redirect()->back()->with('danger', 'Terjadi kegagalan!');
     }

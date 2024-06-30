@@ -25,7 +25,7 @@ class UnitDepartementController extends Controller
 
         $unit_count = Unit::count();
 
-        return view('core::administration.unit-departement.index', compact('unitDepts', 'unit_count'));
+        return view('core::administration.unit-departement.index', compact('unitDepts', 'unit_count', 'types'));
     }
 
     /**

@@ -112,4 +112,18 @@ enum OrganizationTypeEnum: int
             self::BRANCH => ProvinceRegencyDistrict::all()
         };
     }
+
+    /**
+     * Get the label accessor with label() object
+     */
+    public function show()
+    {
+        return match ($this) {
+            self::CENTER => false,
+            self::REGION => true,
+            self::PERWIL => true,
+            self::AREA   => true,
+            self::BRANCH => true,
+        };
+    }
 }
