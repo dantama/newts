@@ -43,7 +43,7 @@ class AppDatabaseSeeder extends Seeder
                 'User' => ['read', 'write', 'delete', 'cross-login'],
                 'UserLog' => ['read', 'delete'],
             ],
-            'core' => [
+            'Core' => [
                 'Contract' => ['read', 'write', 'delete'],
                 'Departement' => ['read', 'write', 'delete'],
                 'Position' => ['read', 'write', 'delete'],
@@ -57,13 +57,14 @@ class AppDatabaseSeeder extends Seeder
                 'Manager' => ['read', 'write', 'delete'],
                 'ManagerContract' => ['read', 'write', 'delete'],
             ],
-            'blog' => [
+            'Blog' => [
                 'BlogPost' => ['read', 'write', 'delete'],
                 'BlogCategory' => ['read', 'write', 'delete'],
                 'BlogPostComment' => ['read', 'write', 'delete'],
                 'BlogPostTag' => ['read', 'write', 'delete'],
                 'Subscriber' => ['read', 'write', 'delete'],
                 'Testimony' => ['read', 'write', 'delete'],
+                'Template' => ['read', 'write', 'delete'],
             ],
             'Event' => [
                 'Cart' => ['read', 'write', 'delete'],

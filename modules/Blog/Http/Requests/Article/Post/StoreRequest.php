@@ -3,7 +3,7 @@
 namespace Modules\Blog\Http\Requests\Article\Post;
 
 use App\Http\Requests\FormRequest;
-use Modules\Blog\Models\Post;
+use Modules\Blog\Models\BlogPost;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Modules\Blog\Enums\VisibilityTypeEnum;
@@ -15,7 +15,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('store', Post::class);
+        return $this->user()->can('store', BlogPost::class);
     }
 
     /**

@@ -23,5 +23,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('/categories', 'CategoryController');
         // Testimony
     });
+    // Testimoni
     Route::resource('/testimonies', 'TestimonyController');
+    // Pages
+    Route::resource('/pages', 'PageController');
 });

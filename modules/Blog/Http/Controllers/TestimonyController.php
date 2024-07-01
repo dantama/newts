@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Modules\Blog\Http\Controllers\Controller;
 use Modules\Blog\Http\Requests\Testimony\StoreRequest;
 use Modules\Blog\Http\Requests\Testimony\UpdateRequest;
-use Modules\Blog\Models\Category;
 use Modules\Blog\Models\Testimony;
 
 class TestimonyController extends Controller

@@ -32,6 +32,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('blog::testimonies.index') }}"> <i class="mdi mdi-account-outline"></i> Testimoni </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('blog::pages.index') }}"> <i class="mdi mdi-web"></i> Laman </a>
+                </li>
                 <li class="divider">Akun</li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('account::home') }}"> <i class="mdi mdi-account-outline"></i> Akun saya </a>
