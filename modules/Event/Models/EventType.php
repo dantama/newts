@@ -2,17 +2,20 @@
 
 namespace Modules\Event\Models;
 
+use App\Models\Traits\Searchable\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class EventType extends Model
 {
+    use Searchable;
+
     protected $table = "event_categories";
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name', 'description'
+        'title', 'kd', 'description'
     ];
 
     /**
@@ -31,6 +34,11 @@ class EventType extends Model
      * The attributes that should be cast to native types.
      */
     protected $casts = [];
+
+    /**
+     * search.
+     */
+    protected $search = ['title'];
 
     /**
      * This has many events.
